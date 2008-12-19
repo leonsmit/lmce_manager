@@ -1,0 +1,362 @@
+Welcome to LMCE Manager Second Beta Release
+
+Table of Contents
+* About
+* Requirements
+* Installation
+* Running Rake Tasks
+* DVD Profiler Synchronization
+* Advanced Tasks
+* Developer Notes
+* References
+
+-------------------------------
+About
+
+LMCE Manager is intended to provide a Ruby On Rails framework for various LinuxMCE 0710 management functions.  For this second release, one feature is included and that is to allow syncing media data from DVD Profiler.  Future features may include media file management or RESTful routing to LinuxMCE standard features (for example management of DHCP).
+
+LMCE Manager does include ActiveRecord models for all the LinuxMCE databases (pluto_main, pluto_media, pluto_myth, pluto_security, & pluto_telecom).  The models are in their database's namespace and each model name is created by prepending "Lmce" to the table name.  This was necessary because of naming conflicts between some table names and ActiveRecord's internal names (ex, Attribute).  Further the models include associations to other models, eliminating the need to code SQL joins.  Currently the models do not do any validation and I have not set up any destruction dependencies.  Each model should be well commented.  Models are stored under app/models.  Subdirectories under models are namespaces (ex, app/models/pluto_media is the PlutoMedia namespace).  For example, to access the pluto_media.file table, you would use the model PlutoMedia::LmceFile whose source file is app/models/pluto_media/lmce_file.rb.
+
+For this second beta release, a web interface to LMCE Manager is now provided.  Also the new setup script (see the Installation section) will install all the required dependencies.  
+
+For the curious, LMCE Manager adds the Passenger module to LinuxMCE's apache.  Passenger then serves the rails application.
+
+Currently there is a security hole in that LMCE Manager does not have authentication so anyone on your internal network will have access.  This isn't extremely dire as all a use can do is synchronize ISBNs and Attributes from the existing DVD Profiler exported data (Collection.xml).
+
+The previous rake commands are still available (and there are a few more) from the command line.  This is the result of my development flow where I develop the rake task first, them move logic into the models, then add the controller and view.
+
+-------------------------------
+Requirements
+
+* LinuxMCE 0710 rc2
+* DVD Profiler 3.1.1
+
+-------------------------------
+Installation
+
+This should be a mostly painless task.  You simply create the directory, unarchive <%= dist_filename %>, then run a setup script.
+
+Note, you should be able to just copy and paste these commands to your shell.
+
+Create rails directory that user linuxmce has write permission to:
+
+	sudo mkdir -p /var/rails
+	sudo chown linuxmce.linuxmce /var/rails
+	sudo chmod 777 /var/rails
+
+Copy <%= dist_filename %> to /var/rails
+
+Unarchive <%= dist_filename %>:
+
+	cd /var/rails
+	tar xzf <%= dist_filename %>
+
+Now run the setup script:
+
+	bin/setup
+
+The script will give you further directions for setting up your system, the most import direction will be adding two scripts to your sudo configuration so they do not need passwords (have I mentioned how much I hate having media owned by root?).
+
+LMCE Manager should now be installed.
+
+-------------------------------
+Running LMCE Manager Rails Application
+
+Point your browser at http://192.168.80.1/lmce_manager
+
+Please let me know if the web interface is not intuitive.  :)
+
+-------------------------------
+Running Rake Tasks
+
+Change to the /var/rails/lmce_manager directory then run "rake -T" to see a list of available tasks.  That's a lot of tasks, so to reduce the clutter, try running "rake -T dvdprofiler".  You should see something like:
+
+rake dvdprofiler:all                   # Run sync:isbn sync:attributes repo...
+rake dvdprofiler:assign_isbn           # Assign ISBN to media File by FK_Fi...
+rake dvdprofiler:export                # Tell DVD Profiler to export it's pr...
+rake dvdprofiler:report:missing_isbns  # Display media files that are missi...
+rake dvdprofiler:report:missing_rips   # Display media files that are in DV...
+rake dvdprofiler:sync:attributes       # Sync attributes from the DVDProfil...
+rake dvdprofiler:sync:isbns            # Sync ISBN attributes from DVDProfi...
+
+The part to the left of the # is the command to run while the part to the right is part of the description.  To see all of the descriptions, run "rake -D dvdprofiler".  
+
+The lmce: tasks are described under Advanced Tasks below.
+
+Warning, you really need to know what you are doing before running any dev: tasks, they can mess up your system.
+
+The rest of the tasks are rails related.
+
+For more help on running rake, run "rake --help".
+
+Now what tasks do we want to run?
+
+-------------------------------
+DVD Profiler Synchronization
+
+First a very quick intro to the various pieces involved.
+
+DVD Profiler uses the ISBN number of commercial DVDs, HD-DVDs, & Blu-Ray Discs as the primary key for referencing media profiles.  Secondary keys include disc IDs and title.  DVD Profiler uses a closed database but does have an export to xml file feature that we will take advantage of.
+
+LinuxMCE media organization is centered on the pluto_media.file table which contains the media's path and filename.  Each file record may reference attributes such as title, genre,...
+
+LMCE Manager creates it's own database with a lmce_manager_development.file_dvdprofiler table that contains an external key to a pluto_media.file record, the ISBN number, and the profile's LastEdited date/time.  The LastEdited field is used to allow changing the LinuxMCE metadata only if DVD Profiler's profile changed (a major performance optimization).
+
+OK, with the main pieces in mind, let's tackle the expected work flow.
+
+Start with one or more new DVDs.  You scan them into DVD Profiler and rip them with LinuxMCE.  Now to sync the metadata, you first use DVD Profiler to export the Collection.xml file.  Here's the steps to export the Collection.xml file:
+
+1) run DVD Profiler
+2) File, Export Profile Database, 
+3) accept the non-commercial use agreement
+4) under Export File(s), select Single file and make sure the filename is Collection.xml
+5) choose your export directory.  This really depends on whether or not you are running DVD Profiler on your dcerouter.  If you are, then you can export directly to /var/rails/lmce_manager/db/dvdprofiler.  If not, then just choose where it is convenient for you to staging.
+6) press Next
+7) I recommend exporting only your Owned profiles, but it is up to you.  Just remember that all of your rip DVDs on your LinuxMCE system should be included by the Export Selection.
+8) under Optional Export Data, you should export as a minimum: Overview, Cast.  The rest are currently not used by LMCE Manager.
+9) press Export
+
+The exported Collection.xml file then needs to be copied or linked to /var/rails/lmce_manager/db/dvdprofiler/Collection.xml on your dcerouter.  Also the cover art images (in ~/DVD Profiler/Databases/Default/Images for wine users, I don't know where it is for windows users) needs to be copied or linked to /var/rails/lmce_manager/db/dvdprofiler/Images on your dcerouter.
+
+Note, there is a rake task, "rake dvdprofiler:export", that with a little messaging could be used to have DVD Profiler export Collection.xml.  Currently that task assumes DVD Profiler is ran under wine on the current machine.  I use this task on my gentoo workstation where I have DVD Profiler installed.  I have not tested running DVD Profiler on a dcerouter.  Here's the task from /var/rails/lmce_manager/lib/tasks/dvdprofiler.rake
+
+	desc "Tell DVD Profiler to export it's profiles to db/dvdprofiler/Collection.xml"
+	task(:export) do
+		run 'env WINEPREFIX="/home/royw/.wine" wine "C:\Program Files\DVD Profiler\dvdpro.exe" /NoSplash /CloseExisting /CommandFile="script/dvdprofiler.export.commands"'
+	end
+
+If you do install DVD Profiler on your dcerouter, you will need to edit the path to your .wine file ("/home/royw/.wine" would be "/home/linuxmce/.wine" if installed by the linuxmce user).  
+
+If you are running DVD Profiler on a windows machine, you can easily convert the above command line into a batch file.
+
+For Capistrano users, there is a deploy:dvdprofiler task in config/deploy.rb that you can use to push Collection.xml to your dcerouter.  Note, you will need to localize deploy.rb to your system/account.  For those not familiar with Capistrano, it is a tool used by rails application developers to deploy their rails applications and is not needed for LMCE Manager (I use it on my workstation to deploy to my dcerouter).
+
+OK, so now that we have current DVD Profiler data, we need to cross-reference the LinuxMCE media files with the DVD Profiler profiles.  We do this by synchronizing the ISBNs.  So run: "rake dvdprofiler:sync:isbns".  This will attempt to match titles between LinuxMCE database and DVD Profiler's exported Collection.xml file.  I use the word attempt as it can not match if there are multiple profiles with the same title or if the profile is for a boxed set or if the title's just don't match (Example, amazon stored "Tracy & Hepburn Collection" for a title instead of "Woman of the Year").
+
+The following are the steps used for matching the titles:
+
+1) all titles are downcasted (converted to lowercase)
+2) anything in square brackets or parenthesis are inclusively removed
+3) any ampersand bordered by whitespace " & " is converted to the word " and "
+4) any escaped html characters (ex: "&lt;") are replaced with spaces
+5) punctuation characters :!"',.-/ are converted to spaces
+6) multiple whitespaces are reduced to single whitespace
+7) whitespaces at the beginning and/or end are removed
+8) One problem with the Amazon data that LinuxMCE uses is they sometimes add or remove "the", "a", or "an" at the beginning of the title.  So for matching we have to try all permutations.
+
+Here's an example that shows the above steps applied to a totally constructed title:
+
+Initial title: "A &lt;Foo&gt; & Bar: Director's Cut [Sidescreen] (P&S)"
+
+1) "a &lt;foo&gt; & bar: director's cut [widescreen] (p&s)"
+2) "a &lt;foo&gt; & bar: director's cut  "
+3) "a &lt;foo&gt; and bar: director's cut  "
+4) "a  foo  and bar: director's cut  "
+5) "a  foo  and bar  director s cut  "
+6) "a foo and bar director s cut  "
+7) "a foo and bar director s cut"
+8) try to match [
+	"foo and bar director s cut",
+	"a foo and bar director s cut",
+	"an a foo and bar director s cut",
+	"the a foo and bar director s cut"
+   ]
+
+Please let me know if you hit any titles that appear to break these match rules.
+
+Note, I'm seeing about a 90% positive matches with just about all the unmatched being either multiple titles (for example I have both the John Wayne "The Alamo" and the more recent one) or boxed sets (like "The Adventures of Indiana Jones").
+
+At the end of the "rake dvdprofiler:sync:isbns" output, you should see a summary like:
+
+	685 media files
+	85 media files without ISBN
+	8 media files that match multiple ISBNs
+	10 media files that we added ISBN to
+	590 media files already have an ISBN
+	dvdprofiler:sync:isbns elapse time: 00:01:41
+
+If "media files that we added ISBN to" is greater than 0, then that means there are some files that need their attributes synchronized.  This leads us to the next rake task.
+
+To synchronize LinuxMCE attributes and images from DVD Profiler profiles, run "rake dvdprofiler:sync:attributes".
+This task can take a while, especially the first time you are synchronizing with DVD Profiler.  Currently the following is a list of attributes that are copied from the profile to LinuxMCE:
+
+	pluto_media.AttributeType	Collection.xml
+	'Genre'				Genres/Genre
+	'Performer'			Actors/Actor[FirstName, MiddleName, LastName]
+	'Studio'			Studios/Studio
+	'Release Date'			ProductionYear
+	'Rated'				Rating
+	'Run Time'			RunningTime
+	'DVD Release Date'		Released
+	'Synopsis'			Overview
+	'Title'				Title
+
+Please let me know if you would find any other attributes to be useful.
+
+You should run both "rake dvdprofiler:sync:isbns" then "rake dvdprofiler:sync:attributes" after updating the Collection.xml from DVD Profiler's export.
+
+You now have the media that we could auto cross-reference synchronized.  So what next?  We have two reports and an editing task to help you further manage your system.
+
+So let's start off getting a report of all the LinuxMCE DVD files that do not have an ISBN associated.  Simply run "rake dvdprofiler:report:missing_isbns".  This will generate an output like:
+
+	Sabrina, 103, /home/public/data/videos/WDC_WD10EACS-00Z (sdb1)-CORE [33]/Romantic Comedy/Sabrina.dvd
+	   rake dvdprofiler:assign_isbn FK_File=103 ISBN=
+	Back to the Future, 142, /home/public/data/videos/WDC_WD10EACS-00Z (sdb1)-CORE [33]/Comedy/Back to the Future.dvd
+	   rake dvdprofiler:assign_isbn FK_File=142 ISBN=
+	Back to the Future Part III, 157, /home/public/data/videos/WDC_WD10EACS-00Z (sdb1)-CORE [33]/Comedy/Back to the Future III.dvd
+	   rake dvdprofiler:assign_isbn FK_File=157 ISBN=
+	Back to the Future Part II, 166, /home/public/data/videos/WDC_WD10EACS-00Z (sdb1)-CORE [33]/Comedy/Back to the Future II.dvd
+	   rake dvdprofiler:assign_isbn FK_File=166 ISBN=
+	...
+	
+	685 media files
+	85 media files are missing an ISBN attribute
+	dvdprofiler:report:missing_isbns elapse time: 00:00:00
+
+This report can look a little busy, so let's examine one movie:
+
+	Sabrina, 103, /home/public/data/videos/WDC_WD10EACS-00Z (sdb1)-CORE [33]/Romantic Comedy/Sabrina.dvd
+	   rake dvdprofiler:assign_isbn FK_File=103 ISBN=
+
+What we have on the first line is: title, FK_File, Path/Filename
+The FK_File is the integer ID for the movie in the pluto_media.File table.  We need it to be able to assign an ISBN to the file.
+
+This leads us to the second managment task, "rake dvdprofiler:assign_isbn".  This task requires two command line arguments, "FK_File=nn" and "ISBN=nnnnnnnnnnnn".  If you leave out the ISBN number (i.e., just have "ISBN="), then any ISBN currently assigned is removed.
+
+Back to our movie example:
+
+	Sabrina, 103, /home/public/data/videos/WDC_WD10EACS-00Z (sdb1)-CORE [33]/Romantic Comedy/Sabrina.dvd
+	   rake dvdprofiler:assign_isbn FK_File=103 ISBN=
+
+The second line is a helper that you can copy and paste it into your shell.  Then all you have to do is add the ISBN and run the command.  If you have the cover and a bar code reader, then it's a simple, copy, paste, scan and presto, it's assigned.  If you don't have the cover you can look up the movie in DVD Profiler and type the ISBN from the profile (I haven't figured a way to copy the ISBN from DVD Profiler).
+
+Cool, we can now see which files that are not synchronized and we can manually associate an ISBN with a file.  That leaves the last report which helps you answer the question "what movies do I have in DVD Profiler but have not ripped on LinuxMCE?".  Simply run "rake dvdprofiler:report:missing_rips".
+
+This leaves us with just one rake task left to discuss, "rake dvdprofiler:all", which simply runs:
+
+	rake dvdprofiler:sync:isbns
+	rake dvdprofiler:sync:attributes
+	rake dvdprofiler:report:missing_isbns
+	rake dvdprofiler:report:missing_rips
+
+I'm not real sure how useful this will be, but thought it might be handy in a cron job.
+
+-------------------------------
+Performance
+
+After a new DVD Profiler exported Collection.xml is accessed by the tasks, it takes a while to parse (2:26 on my AMD 4800+ 2GB RAM dcerouter, and 1:41 on my dev system Q9300 4GB RAM) but then the result is cached in db/dvdprofiler/Collection.yaml so subsequent access are a lot faster (about a second on my dcerouter).  Note, if you are running DVD Profiler on a machine other than your dcerouter, make sure both machine's date and time are close as the modification times of Collection.xml and Collection.yaml are used to determine when to rebuild the cache.  Note, you can force a rebuild by deleting db/dvdprofiler/Collection.yaml.
+
+The time consumer is "rake dvdprofiler:sync:attributes".  For example, on my dcerouter, an initial synch of 655 media files took 01:07:46 (6.2 seconds/file) while a later update of just 26 media files took 3:02 (7 seconds/file).
+
+-------------------------------
+Advanced Tasks
+
+rake lmce:set_fileformat_for_dir           # Set FileFormat for a directory...
+rake lmce:set_mediasubtype_for_dir         # Set MediaSubType for a directo...
+rake lmce:set_mediatype_for_dir            # Set MediaType for a directory ...
+
+Very useful tasks for setting MediaType, MediaSubType, or FileFormat on a directory branch.  Be sure to look at the complete descriptions using "rake -D lmce:set_".  Prime candidates for cron jobs.  :-)
+
+rake lmce:isbn_find_by_title               # Find the ISBN by title, args: ...
+rake lmce:title_find_by_isbn               # Find the title by ISBN, args: ...
+
+Are helpers to let you find the title from an ISBN and vice versa.
+
+The following are some tasks that might be useful and some that might be dangerous.
+
+rake lmce:db:backup                        # Backup LMCE databases to /home...
+rake lmce:db:load                          # loads the linuxmce databases f...
+rake lmce:db:reload                        # drops and recreates the databa...
+
+lmce:db:backup simply dumps the pluto databases to db/backup
+
+lmce:db:load simply drops the current pluto databases then loads the backups.  There is no check that the backups exist.  Theory is that this will restore your database to it's last backuped up state.  Experience shows this is the case MOST of the time.  I'd recommend only trying this if your only other option is to reinstall.
+
+lmce:db:reload drops and tries to load the backuped up pluto databases, but also drops the lmce_manager database then recreates it (i.e. with no data).  I'm finding this is a pretty dangerous command, so prefer to run "rake db:reset" which only drops then recreates the lmce_manager database.  You can then run the two sync tasks (dvdprofiler:sync:isbns & dvdprofiler:sync:attributes) to rebuild the lmce_manager database.  Note, any manually assigned ISBNs are lost and you will have to assign them again.
+
+rake lmce:check_media_models               # Check the associations for med...
+rake lmce:create_picture_html              # Create a Title - Picture - Thu...
+rake lmce:find_dvd_with_multiple_pictures  # Find DVD media that have multi...
+rake lmce:find_dvd_without_pictures        # Find DVD media that do not hav...
+rake lmce:find_picture_urls                # Find Pictures that have an URL
+rake lmce:remove_multiple_pictures         # Remove pictures associated wit...
+rake lmce:remove_pictures_by_file_id       # Remove pictures associated wit...
+rake lmce:remove_pictures_with_isbn        # Remove pictures associated wit...
+rake lmce:update_picture                   # Update an image from DvdProfil...
+
+The above are some picture management tasks.  Here's how I recommend using them:
+
+Start with "rake lmce:check_media_models".  The important thing is that there are no bad references.  If there are, you can re-run the task with the "repair=true" option which will remove the join table entries that do not point to existing records.
+
+Next you can run "rake lmce:find_dvd_with_multiple_pictures".  This will show you if you have multiple pictures on a media file.  I've found that LinuxMCE only uses one picture, so it's best to remove the extras.  You can remove all the pictures from media files that have multiple pictures by running "rake lmce:remove_multiple_pictures".  Remember that "rake dvdprofiler:sync:attributes" will create pictures if needed, so this is a pretty safe thing to do if the majority of your media files have ISBNs.  If you want to be safer, then run "rake lmce:remove_pictures_with_isbn" which will only remove all the pictures from media files that have an ISBN.
+
+I haven't figured out how LinuxMCE makes use of the picture URLs.  When ripped the URL points to http://services.windowsmedia.com/...  Since we want to use the images from DVD Profiler, I've been setting the URL to the file path to the db/dvdprofiler/Images/{isbn}f.jpg.  If anyone has more insight, please share.  For now you can see what the non-nil URLs are by running "rake lmce:find_picture_urls".
+
+If you find that your pictures are not matching the media file (I suspect that this was a side-effect of my mistakes during development), you may find running "rake lmce:create_picture_html" useful.  This will generate www/pictures.html which will show the picture, title, isbn, and a rake command line to remove the picture from the file.  The later is useful if the picture does not match the title.  Also you can symbolically link the www directory to make it accessable from a browser by issueing this command:  "sudo ln -s /var/rails/lmce_manager/www /var/www/lmce_manager".  Also need to link the mediapics directory with "sudo ln -s /home/mediapics /var/rails/lmce_manager/www/mediapics"  The file is then available at http://192.168.80.1/lmce_manager/pictures.html.
+
+The rest of the tasks are for database debugging.  Hopefully you will not need them.
+
+rake lmce:remove_dangling_pictures         # Remove pictures not associated...
+
+-------------------------------
+Developer Notes
+
+Most of the functionality should now be in the models (app/models).  The rake tasks are stored in lib/tasks/*.rake and are a good place to start looking at the code.  For developing, I backup my LinuxMCE database, then copy it to my development system where I load it.  This allows me to freely try things without messing up my core/hybrid.  My usual development process is to write the functionality into the rake task, then see what I can refactor into the models.  The goal is to have mature models when I do the rails UI.
+
+The console is your friend.  Running script/console will give you an irb (interactive ruby shell) that has the rails environment loaded so you have full access to your models.  Give this a try:
+
+  $ script/console
+  >> PlutoMedia::LmceFile
+  >> PlutoMedia::LmceFile.find(:first)
+  >> PlutoMedia::LmceFile.find(:first).lmce_attributes
+
+You might want to use FreeMind to look at the database mindmaps in doc/*.mm
+
+You might want to create html documentation using "rake doc:app" and "rake doc:plugins".  This will place the documentation under doc/app and doc/plugins respectively.
+
+The bin/mysql2models.rb script was used to create the models from a live database.  The script does preserve changes to the model file after the "# add your model extensions after this line" line.  My apologies on mysql2models.rb, it needs to be revisited (it's very ugly).
+
+My Capistrano deployment file (config/deploy.rb) is included but is customized to my system.  You can use it as a starting point if you want.  Pay close attention to the setup task as I use it to apply hacks to my dcerouter.
+
+-------------------------------
+References
+
+LinuxMCE
+  http://www.linuxmce.org
+
+DVD Profiler
+  http://www.invelos.com/
+
+Running DVD Profiler on Linux or Mac
+  http://www.dougweb.org/dvdpro/kb/index.php?title=Running_DVD_Profiler_on_Linux_or_Mac
+
+Wine
+  http://www.winehq.org/
+
+Rake
+  http://rake.rubyforge.org/
+
+Ruby
+  http://www.ruby-lang.org/en/
+
+Ruby on Rails
+  http://rubyonrails.org/
+
+Passenger
+  http://modrails.com/
+
+ActiveRecord
+  http://ar.rubyonrails.com/
+
+Mongrel
+  http://mongrel.rubyforge.org/
+
+Capistrano
+  http://www.capify.org/
+
+FreeMind
+  http://freemind.sourceforge.net/wiki/index.php/Main_Page
+
+
+Copyright 2008 by Roy Wright
+License: GPL version 2 (http://www.opensource.org/licenses/gpl-2.0.php)

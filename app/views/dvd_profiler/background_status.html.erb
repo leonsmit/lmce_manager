@@ -1,0 +1,10 @@
+<h1>Sync ISBN Attribute From DVDProfiler Exported Profiles</h1>
+
+<div id="status">Not Started</div>
+<div id="progress">Progress</div>
+<div id="messages">Messages</div>
+<div id="elapse_seconds">Elapse time (seconds)</div>
+<div id="statistics">Statistics</div>
+
+<%= link_to 'Index', index_dvd_profiler_path %>
+<%= periodically_call_remote(:url => 'background_status', :frequency => 2 )%>

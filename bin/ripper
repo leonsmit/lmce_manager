@@ -1,0 +1,95 @@
+#!/bin/bash
+
+##
+## This is the script I use to make hifi DVD rips including chapter markers and
+## subtitles. It uses Handbrake.
+## Contains what I found to be the best quality ripping parameters and
+## also let me set simple parameters I need.
+##
+## Avi Alkalay <avi at unix dot sh>
+## http://avi.alkalay.net/2008/03/mpeg4-dvd-rip.html
+##
+## $Id$
+##
+
+#set -vx
+
+HANDBRAKE=${HANDBRAKE:=~/bin/HandBrakeCLI}
+#HANDBRAKE=${HANDBRAKE:="/cygdrive/c/Program Files/Handbrake/HandBrakeCLI.exe"}
+## Where is the Handrake encoder executable.
+## Handbrake is the most practical free, OSS, DVD riper available.
+## Download HandBrake for Linux, Mac or Windows at http://HandBrake.fr
+
+INPUT=${INPUT:=/dev/dvd}
+## What to process. Can also be a mounted DVD image or simply '/dev/dvd'
+
+TITLE=${TITLE:=L}
+## The title number to rip, or empty or "L" to get the longest title
+
+#CHAPTERS=${CHAPTERS:=7}
+## Example: 0 or undefined (all chapters), 7 (only chapter 7), 3-6 (chapters 3 to 6)
+
+#VERBOSE=${VERBOSE:="yes"}
+## Wether to be verbose while processing.
+
+SIZE=${SIZE:=1400}
+## Target file size in MB. The biggest the file size, the best the quality.
+## I use to use from 1000MB to 1400MB for astonishing high quality H.264 rips.
+
+OUTPUT=${OUTPUT:="output.mkv"}
+## Output file. This will also define the file format.
+## MKV (Matroska) is currently the best but MP4 is also good.
+
+AUDIO=${AUDIO:="-E ac3 -6 dpl2 -D 1"} # For AC3 passthru (copy).
+#AUDIO=${AUDIO:="-E lame -B 160"} # For MP3 reencoding. Good when input is DTS.
+## Audio parameters. If input is AC3, use it without transcoding.
+## If is DTS, reencode to MP3.
+
+MATRIX=${MATRIX:=`dirname $0`/eqm_avc_hr.cfg}
+## x264 matrix to use. The matrix file may increase encoding speed and quality.
+## This one is Sharktooth's as found
+## at http://forum.doom9.org/showthread.php?t=96298
+
+######### Do not change anything below this line ##############
+
+## Make some calculations regarding title and chapters based on parameters.
+SEGMENT=""
+if [[ "$TITLE" == "L" || -z "$TITLE" ]]; then
+	SEGMENT="-L"
+else
+	SEGMENT="-t $TITLE"
+fi
+
+[[ -n "$CHAPTERS" && "$CHAPTERS" -ne 0 ]] && SEGMENT+=" -c $CHAPTERS"
+
+[[ "$VERBOSE" != "no" ]] && VERB="-v"
+
+# Define args for the x264 encoder. These are some values I found on the net
+# which give excelent results.
+X264ARGS="ref=3:mixed-refs:bframes=6:b-pyramid=1:bime=1:b-rdo=1:weightb=1"
+X264ARGS+=":analyse=all:8×8dct=1:subme=6:me=umh:merange=24:filter=-2,-2"
+X264ARGS+=":ref=6:mixed-refs=1:trellis=1:no-fast-pskip=1"
+X264ARGS+=":no-dct-decimate=1:direct=auto"
+[[ -n "$MATRIX" ]] && X264ARGS+=":cqm=$MATRIX"
+
+# Encode?
+"$HANDBRAKE" $VERB -i "$INPUT" -o "$OUTPUT" \
+	-S $SIZE \
+	-m $SEGMENT \
+	$AUDIO \
+	-e x264 -2 -T -p \
+	-x $X264ARGS
+
+# Repackage to optimize file size, to include seek and to include this
+# this script as a way to document the rip?
+echo $OUTPUT | grep -qi ".mkv"
+if [[ $? && -x `which mkvmerge` && -f $OUTPUT ]]; then
+	mv $OUTPUT $OUTPUT.mkv
+	mkvmerge -o $OUTPUT $OUTPUT.mkv \
+		?attachment-name "The ripping script" \
+		?attachment-description "How this movie was created from original DVD" \
+		?attachment-mime-type application/x-sh \
+		?attach-file $0
+
+	[[ -f $OUTPUT ]] && rm $OUTPUT.mkv
+fi

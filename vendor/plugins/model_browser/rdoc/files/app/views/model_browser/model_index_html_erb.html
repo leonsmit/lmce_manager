@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>File: model_index.html.erb</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+  <div id="fileHeader">
+    <h1>model_index.html.erb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>app/views/model_browser/model_index.html.erb
+      </td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Wed Jul 16 12:14:30 +0200 2008</td>
+    </tr>
+    </table>
+  </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+&lt;%
+</p>
+<h1>begin</h1>
+<p>
+This template renders a list of model-classes with links to their
+index-pages.
+</p>
+<p>
+The calling controller <b>must</b> provide the following information
+</p>
+<table>
+<tr><td valign="top">@resources:</td><td>an array with the resources to display. Each entry must be a hash
+containing:
+
+<table>
+<tr><td valign="top">&#8217;:controller&#8217;:</td><td>The name of the controller-class handling the resource
+
+</td></tr>
+<tr><td valign="top">&#8217;:display_name&#8217;:</td><td>A user-friendly display-name for the resource
+
+</td></tr>
+<tr><td valign="top">&#8217;:table_name&#8217;:</td><td>The name of the resource&#8216;s database table
+
+</td></tr>
+<tr><td valign="top">&#8217;:model_class_name&#8217;:</td><td>The name of the resource&#8216;s model-class
+
+</td></tr>
+</table>
+</td></tr>
+</table>
+<h2>Styling</h2>
+<p>
+To support css-styling of the generated html, the following css-classes are
+used:
+</p>
+<table>
+<tr><td valign="top">genericIndex:</td><td>A div of this css-class spans the whole generated view-block. With this
+enclosing class, you can individually style the tags used inside this
+block:
+
+<table>
+<tr><td valign="top">heading_tag:</td><td>the parameter-provided tag for the heading
+
+</td></tr>
+<tr><td valign="top">table:</td><td>the table containing the resource-list
+
+</td></tr>
+<tr><td valign="top">tr:</td><td>each row in the resource-list
+
+</td></tr>
+<tr><td valign="top">th:</td><td>the table-heading
+
+</td></tr>
+<tr><td valign="top">td:</td><td>the table-entries
+
+</td></tr>
+<tr><td valign="top">a:</td><td>links to the index-pages of each resource
+
+</td></tr>
+</table>
+</td></tr>
+</table>
+<h1>end</h1>
+<p>
+%&gt; &lt;% @resources.sort! {|x,y| x[:display_name] &lt;=&gt;
+y[:display_name] } %&gt; &lt;div class=&quot;genericIndex&quot;&gt;
+</p>
+<pre>
+  &lt;h1&gt;Available Resources&lt;/h1&gt;
+  &lt;table&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Model object&lt;/th&gt;
+      &lt;th&gt;DB-Table&lt;/th&gt;
+      &lt;th&gt;Model class&lt;/th&gt;
+    &lt;/tr&gt;
+    &lt;% @resources.each do |resource| %&gt;
+      &lt;% controller = resource[:controller] %&gt;
+      &lt;tr&gt;
+        &lt;td&gt;&lt;%= link_to &quot;#{resource[:display_name]}&quot;, :controller =&gt; controller %&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;%= link_to &quot;#{resource[:table_name].upcase}&quot;, :controller =&gt; controller %&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;%= link_to &quot;#{resource[:model_class_name]}&quot;, :controller =&gt; controller %&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+    &lt;% end %&gt;
+  &lt;/table&gt;
+</pre>
+<p>
+&lt;/div&gt;
+</p>
+
+    </div>
+
+
+   </div>
+
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

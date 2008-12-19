@@ -1,0 +1,63 @@
+#status {
+	background-color: #00a000;
+	padding-left: 1em;
+}
+
+#progress {
+	background-color: #6dff6d;
+	padding-left: 1em;
+}
+
+#messages {
+	color: #000;
+	background-color: #d0ffd0;
+	padding-right: 2em;
+	padding-left: 1em;
+	width: auto;
+	height: 480px;
+	border: 2px solid #444;
+	overflow: scroll;
+	white-space: nowrap;
+}
+
+#elapse_seconds {
+	background-color: #6dff6d;
+	padding-left: 1em;
+}
+
+#statistics {
+	background-color: #00a000;
+	padding-left: 1em;
+}
+
+div.row {
+  clear: both;
+  padding-top: 10px;
+}
+
+div.row span.label {
+  float: left;
+  width: 10em;
+  text-align: right;
+  padding-right: 1em;
+}
+
+div.row span.formw {
+  float: left;
+}
+
+div.row span.formw input {
+  background-color: #6dff6d;
+  text-align: left;
+  font-family: monospace;
+  font-size: 1em;
+  padding-left: 0.5em;
+}
+
+div.row span.formw textarea {
+  background-color: #6dff6d;
+  text-align: left;
+  font-family: monospace;
+  font-size: 1em;
+  padding-left: 0.5em;
+}

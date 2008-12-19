@@ -1,0 +1,97 @@
+<%
+=begin
+
+This view partial generates a list of objects as targets of one association of another model-object.
+Basically the view consists of:
+
+* a heading identifying the association by:
+
+  * the association type
+  * the association-target's table-name
+  * optional the association-target's display-name
+  
+* a table displaying index-entries for the association's target-objects; each entry with a
+  navigatable link to the target-object's detail-view.
+
+== Locals
+
+The following locals *must* be provided to generate the view:
+
+entries:: 
+  An array containing the association-target-objects to display.
+
+entry_class::
+  The class of the objects to display, so that configuration information may be obtained.
+
+In addition the following optional locals can be used to tweak the view:
+
+heading_tag:: 
+  html-tag for the generated heading; default: <tt>span</tt>
+  A heading may be suppressed totally by providing <tt>:none</tt>
+  
+association_type::
+  the type of the association to display. Default: associates_to
+  
+columns::
+  an array of attribute-names to display in the index-list. The default is 
+  +entry_class.preferred_index_columns+
+
+== Styling
+
+To support css-styling of the generated html, the following css-classes are used:
+
+genericIndex:: 
+  A div of this css-class spans the whole generated view-block. With this enclosing class,
+  you can individually style the tags used inside this block:
+  
+  heading_tag:: the parameter-provided tag for the heading
+  table:: the table containing the index-list
+  tr:: each row in the index-table
+  th:: the table-heading
+  td:: the table-entries
+  a:: links to the detail-view of each displayed entry
+
+nullValue::
+  This css-class marks the display of nil-values of attributes (td-tag), which gives the opportunity
+  to style them diffently.
+
+=end
+%>
+
+<%
+  heading_tag ||= 'span'
+  association_type ||= 'associates to'
+  columns ||= entry_class.preferred_index_columns
+%>
+<div class="genericIndex">
+  <% if heading_tag != :none %>
+    <<%= heading_tag.to_s %>>
+      <%=association_type%>: <%=entry_class.table_name.upcase%> - <%=entry_class.display_name%>
+    </<%= heading_tag.to_s %>>
+  <% end %>
+  <table>
+      <tr>
+        <td/>
+        <% columns.each do |column| %>
+          <th><%= column.to_s.upcase %></th>
+        <% end %>
+      </tr>
+
+      <% entries.each do |entry| %>
+        <tr>
+          <td><%= link_to '=>', entry %></td>
+          <% columns.each do |column| %>
+            <% value = entry.display_attribute(column, :index).to_s.gsub(/><([^\/])/, ">\n<\\1").gsub(/<\/(\w*)><\/(\w*)>/, "</\\1>\n</\\2>") %>
+            <td>
+              <% if value.nil? %>
+                <span class="nullValue">NULL</b>
+              <% else %>
+                <%= h value %>
+              <%end%>
+            </td>
+          <% end %>
+        </tr>
+      <% end %>
+  </table>
+</div>
+

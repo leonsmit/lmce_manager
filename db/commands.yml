@@ -1,0 +1,13 @@
+--- 
+- :name: Set MediaType to
+  :values: available ||= {}; PlutoMain::MediaType.find(:all).collect {|record| available[record.Description] = record.PK_MediaType};available
+  :arg_type: hash
+  :command: file.EK_MediaType = arg
+- :name: Set MediaSubType to
+  :values: available ||= {}; PlutoMedia::MediaSubType.find(:all).collect {|record| available[record.Description] = record.PK_MediaSubType};available
+  :arg_type: hash
+  :command: file.FK_MediaSubType = arg
+- :name: Set FileFormat to
+  :values: available ||= {}; PlutoMedia::FileFormat.find(:all).collect {|record| available[record.Description] = record.PK_FileFormat};available
+  :arg_type: hash
+  :command: file.FK_FileFormat = arg

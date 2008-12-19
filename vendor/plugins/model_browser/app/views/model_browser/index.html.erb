@@ -1,0 +1,36 @@
+<%
+=begin
+
+This view renders the index-display for a model-class (controller-action +index+).
+
+It simply uses the partials +model_browser/filter+  and +model_browser/index+ to provide
+a filterable list of all model-instances.
+
+Pagination via +will_paginate+ is supported to cope with large result-sets.
+
+The following members *must* be provided by the calling controller:
+
+@model_class::
+  the model-class, for which the list shall be displayed
+
+@model_instances::
+  an array with the model-objects to display
+
+=end
+%>
+
+<%
+  filter_attributes ||= @model_class.filter_attributes || @model_class.primary_key
+%>
+<h1>Index of <%=@model_class.table_name.upcase%> - <%=@model_class.display_name%></h1>
+<%= render :partial => "model_browser/filter", :locals => {
+    :filter_attributes => filter_attributes
+} %>
+<p/>
+<%= render :partial => "model_browser/index", :locals => {
+    :heading_tag => :none,
+    :entry_class => @model_class,
+    :entries => @model_instances
+} %>
+<%= will_paginate @model_instances %>
+

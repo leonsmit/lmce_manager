@@ -1,0 +1,12 @@
+<h2>Files Show</h2>
+
+<h3>File ID: <%= @lmce_file.id%></h3>
+<p><%= File.join(@lmce_file.Path, @lmce_file.Filename) %></p>
+<p>Title: <%= @lmce_file.title %></p>
+<p>ISBN: <%= @lmce_file.isbn.blank? ? 'not assigned' : @lmce_file.isbn %></p>
+<ul>
+  <% @lmce_file.lmce_attributes.sort{|a,b| a.lmce_attribute_type.id <=> b.lmce_attribute_type.id}.each do |a| -%>
+    <li><%= a.lmce_attribute_type.Description -%>: <%= a.Name -%></li>
+    <% logger.info "#references: #{a.references}" -%>
+  <% end -%>
+</ul>

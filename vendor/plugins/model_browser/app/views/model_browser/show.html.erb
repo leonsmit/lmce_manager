@@ -1,0 +1,43 @@
+<%
+=begin
+
+This view renders the detail-display of one model-object's instance.
+It is called by the +show+-action of the model-object's controller.
+
+It displays the object's attributes using the partial +model_browser/details+
+and reflects all the model-objects associations to render an index of the
+associated objects using the partial +model_brower/index+ for each association,
+which target-set is not empty.
+
+The calling controller *must* provide the following information:
+
+@model_instance:: the model-object to display
+
+=end
+%>
+
+<%= render :partial => "model_browser/details", :locals => { 
+  :heading_tag => :h1,
+  :object_class => @model_instance.class,
+  :object => @model_instance,
+  :only => @model_instance.class.preferred_detail_attributes
+} %>
+  
+<% @model_instance.class.reflect_on_all_associations.each do |association|
+  target = @model_instance.method(association.name).call
+  next if target.nil?
+  if association.macro == :has_one || association.macro == :belongs_to
+    entries = [ target ]
+  else
+    entries = target
+  end
+  next if entries.empty?
+%>
+  <%= render :partial => "model_browser/index", :locals => {
+      :heading_tag => :h2,
+      :association_type => association.macro.to_s,
+      :entry_class => entries[0].class,
+      :entries => entries
+  } %>
+<% end %>
+

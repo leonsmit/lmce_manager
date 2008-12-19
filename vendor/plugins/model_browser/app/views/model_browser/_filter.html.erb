@@ -1,0 +1,47 @@
+<%
+=begin
+
+This view partial generates a form for a model-object's attributes, which may be used
+for filtering a list.
+
+This view simply consists of a form with an input field for each filter-attribute and a
+"Filter"-button, which submits the form.
+
+== Parameters
+
+The following parameters *must* be provided to generate the view:
+
+filter_attributes:: 
+  An array containing the names of the filter-attributes or a single name
+  of one single filter-attribute to display.
+
+== Styling
+
+To support css-styling of the generated html, the following css-classes are used:
+
+genericFilter:: 
+  A div of this css-class spans the whole generated view-block. With this enclosing class,
+  you can individually style the tags used inside this block:
+  
+  label:: the input-fields' labels
+  input:: the individual input-fields
+
+=end
+%>
+
+<%
+  filter_attributes ||= []
+  filter_attributes = [filter_attributes] unless filter_attributes.respond_to? :each
+%>
+<div class="genericFilter">
+  <% if !filter_attributes.empty? %>
+    <% form_tag({:action => 'index'}, :method => 'get') do %>
+      <% filter_attributes.each do |filter_attribute| %>
+        <label><%= filter_attribute.to_s.upcase %></label>
+        <%= text_field_tag filter_attribute, h(params[filter_attribute]) %>
+      <% end %>
+      <%= submit_tag 'Filter' %>
+    <% end %>
+  <% end %>
+</div>
+

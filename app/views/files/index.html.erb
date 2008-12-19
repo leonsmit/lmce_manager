@@ -1,0 +1,9 @@
+<% content_for :javascript do %>
+  <%= javascript_include_tag "files_index" %>
+<% end %>
+
+<h1>LinuxMCE Files</h1>
+
+<h2>Files Index</h2>
+
+<%= link_to "Add new item", new_item_path, :id => "add_new_link" %>

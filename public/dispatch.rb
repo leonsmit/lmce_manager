@@ -1,0 +1,13 @@
+# Copyright 2008 by Roy Wright
+# License: GPL version 2 (http://www.opensource.org/licenses/gpl-2.0.php)
+
+#!/usr/bin/ruby18
+
+require File.dirname(__FILE__) + "/../config/environment" unless defined?(RAILS_ROOT)
+
+# If you're using RubyGems and mod_ruby, this require should be changed to an absolute path one, like:
+# "/usr/local/lib/ruby/gems/1.8/gems/rails-0.8.0/lib/dispatcher" -- otherwise performance is severely impaired
+require "dispatcher"
+
+ADDITIONAL_LOAD_PATHS.reverse.each { |dir| $:.unshift(dir) if File.directory?(dir) } if defined?(Apache::RubyRun)
+Dispatcher.dispatch

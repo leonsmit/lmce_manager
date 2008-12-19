@@ -1,0 +1,102 @@
+<%
+=begin
+
+This view partial generates a display of model-object's attributes.
+Basically this view consists of
+
+* a heading identifying the model-object's class by:
+
+  * table-name
+  * optional display-name
+  
+* a table displaying the current object's attributes and their values
+
+== Locals
+
+The following locals *must* be provided to generate the view:
+
+object:: 
+  The object to display.
+
+object_class::
+  The class of the object to display. If it is granted that object is never nil, this local 
+  may be omitted, as it is possible to detect it from the object. 
+
+
+In addition the following optional locals can be used to tweak the view:
+
+heading_tag:: 
+  html-tag for the generated heading; default: <tt>span</tt>
+  A heading may be suppressed totally by providing <tt>:none</tt>
+  
+only::
+  a list of attribute-names to limit the display to. If this parameter is given, only the
+  attributes with the provided names are displayed.
+  
+exclude::
+  a list of attribute-names to exclude from the display. If this parameter is given, the
+  attributes with the provided names are not displayed.
+
+== Styling
+
+To support css-styling of the generated html, the following css-classes are used:
+
+genericDetails:: 
+  A div of this css-class spans the whole generated view-block. With this enclosing class,
+  you can individually style the tags used inside this block:
+  
+  heading_tag:: the parameter-provided tag for the heading
+  table:: the table containing the attributes
+  tr:: each row in the attributes-table
+  th:: the attributes' names
+  td:: the attributes' values
+
+nullValue::
+  This css-class marks the display of nil-values of attributes (td-tag), which gives the opportunity
+  to style them diffently.
+
+=end
+%>
+
+<%
+  heading_tag ||= 'span'
+  only ||= []
+  exclude ||= []
+  toDisplay = []
+  if !only.empty?
+    toDisplay = only.map {|x| x.to_s}
+  else
+    toDisplay = object.class.column_names unless object.nil?
+  end
+  toDisplay -= exclude.map {|x| x.to_s} if exclude
+  object_class = object.class if object_class.nil? && !object.nil?
+%>
+<div class="genericDetails">
+  <% if heading_tag != :none %>
+    <<%= heading_tag.to_s %>>
+      <%=object_class.table_name.upcase%> - <%=object_class.display_name%>
+    </<%= heading_tag.to_s %>>
+  <% end %>
+  <table>
+      <% toDisplay.each do |column| %>
+        <% 
+          value = object.display_attribute(column, :detail)
+          # try to pretty-print everything looking like xml
+          formatted = String.new
+          doc = REXML::Document.new h value.to_s
+          doc.write(formatted, 2)
+          value = formatted.gsub(/>\s*([^\s<])/, ">\\1").gsub(/([^\s>])\s*<\//, "\\1</") unless formatted.nil? || formatted.strip.length == 0
+        %>
+        <tr>
+          <th><%= column.upcase %></th>
+          <td>
+            <% if value.nil? %>
+              <span class="nullValue">NULL</b>
+            <% else %>
+              <%= (h value).gsub("\n", "<br/>").gsub(" ", "&nbsp;") %>
+            <%end%>
+          </td>
+        </tr>
+      <% end %>
+  </table>
+</div>

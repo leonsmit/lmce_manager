@@ -1,0 +1,10 @@
+--- 
+user: mongrel
+cwd: /var/rails/lmce_manager/current
+log_file: /var/rails/lmce_manager/shared/log/mongrel.log
+port: "8000"
+environment: production
+group: mongrel
+address: 192.168.80.1
+pid_file: /var/rails/lmce_manager/shared/pids/mongrel.pid
+servers: 3

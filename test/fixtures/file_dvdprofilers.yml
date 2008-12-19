@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  FK_File: 1
+  isbn: MyString
+  last_edited: MyString
+
+two:
+  FK_File: 1
+  isbn: MyString
+  last_edited: MyString

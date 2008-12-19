@@ -1,0 +1,84 @@
+#!/usr/bin/env ruby
+
+require 'optparse'
+
+class DatabaseLoader
+  def dump(path, table_name)
+    puts "rm #{File.join(path, table_name + '.sql')}"
+    `rm #{File.join(path, table_name + '.sql')}`
+    puts "mysqldump -u root --databases #{table_name}    >#{File.join(path, table_name + '.sql')}"
+    `mysqldump -u root --databases #{table_name}    >#{File.join(path, table_name + '.sql')}`
+  end
+end
+
+# running this file from the command line?
+if __FILE__ == $0
+  # == Synopsis
+  # command line exit codes
+  class ExitCode
+    UNKNOWN = 3
+    CRITICAL = 2
+    WARNING = 1
+    OK = 0
+  end
+
+  module Runner
+
+    def self.run(args)
+
+      # load config values from defaultConfig(), then ~/.mysql2models, then .mysql2models
+      configFile = ".dump_pluto_databases"
+      homeConfigFile = File.join("#{ENV['HOME']}", configFile)
+      @config = defaultConfig()
+      @config.merge(YAML.load_file(homeConfigFile)) if File.exist?(homeConfigFile)
+      @config.merge(YAML.load_file(configFile)) if File.exist?(configFile)
+
+      p @config if $DEBUG
+
+      # parse the command line
+      options = setupParser()
+      rest = options.parse(*args)
+
+      # create and execute class instance here
+      loader = DatabaseLoader.new
+      %w{pluto_main pluto_media pluto_myth pluto_security pluto_telecom}.each {|name| loader.dump(@config[:path], name)}
+    end
+
+    # == Synopsis
+    # default configuration values
+    def self.defaultConfig()
+      config = {}
+      config[:path] = File.expand_path('.')
+      return config
+    end
+
+    # == Synopsis
+    # setup the command line option parser
+    def self.setupParser()
+      default_dir = File.join(File.dirname(__FILE__), '../db')
+      options = OptionParser.new
+      options.on_tail("-h", "--help", "This usage information") {|val| usage(options)}
+      options.on("-d", "--default", "Save the databases to the default directory (#{default_dir})") do |val|
+        @config[:path] = default_dir
+      end
+      return options
+    end
+
+    # == Synopsis
+    # print the usage message
+    def self.usage(*objects)
+      #RDoc::usage_no_exit('Synopsis', 'Copyright')
+      @logger.puts 'Dump the pluto databases to pluto_*.sql files.'
+      @logger.puts 'Usage: dump_pluto_databases [options]'
+      @logger.puts 'Options:'
+      objects.each do |obj|
+        @logger.puts obj.to_s
+      end
+      exit ExitCode::UNKNOWN
+    end
+
+  end
+  Runner.run(ARGV)
+end
+
+

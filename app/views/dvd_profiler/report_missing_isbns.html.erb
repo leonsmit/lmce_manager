@@ -1,0 +1,18 @@
+<h1>List Media Files Without An ISBN Attribute</h1>
+
+<div class="missing_isbns">
+  <ul>
+  <% @dvd_profiler.missing_isbn_files.each do |fk_file| -%>
+      <% f = PlutoMedia::LmceFile.find(fk_file) -%>
+      <% unless f.nil? -%>
+        <li><%= "#{f.id}, #{f.title}" %>
+          <ul>
+            <li><%= "#{f.Path}/#{f.Filename}" %></li>
+          </ul>
+        </li>
+      <% end -%>
+    <% end -%>
+  </ul>
+</div>
+
+<%= link_to 'Index', index_dvd_profiler_path %>

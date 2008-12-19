@@ -1,0 +1,16 @@
+<h1>List Titles That Are In DVD Profiler But Not In LinuxMCE </h1>
+<h2><%= "#{@dvd_profiler.not_ripped_isbns.length} Movie Profiles Not Ripped" %></h2>
+
+<div class="not_ripped">
+  <ul>
+    <% isbn_titles = {} -%>
+    <% @dvd_profiler.not_ripped_isbns.each {|isbn| title = @dvd_profiler.isbn_to_title(isbn) ; isbn_titles[title] ||= [] ; isbn_titles[title] << isbn} -%>
+    <% isbn_titles.keys.sort.each do |title| -%>
+      <% isbn_titles[title].each do |isbn| -%>
+        <li><%= "#{isbn}  #{title}" %></li>
+      <% end -%>
+    <% end -%>
+  </ul>
+</div>
+
+<%= link_to 'Index', index_dvd_profiler_path %>

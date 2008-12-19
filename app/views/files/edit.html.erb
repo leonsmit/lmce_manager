@@ -1,0 +1,24 @@
+<h2>Files Edit</h2>
+<fieldset>
+  <legend>File ID: <%= @lmce_file.id.to_s %></legend>
+  <p><%= File.join(@lmce_file.Path, @lmce_file.Filename) %></p>
+  <% form_for :lmce_file, :url => {:action=>"update", :controller=>"files"} do |form| -%>
+    <p>
+      <label>Title</label>
+      <%= form.text_field :title, :size => 80 %>
+    </p>
+    <p>
+      <label>ISBN</label>
+      <%= form.text_field :isbn, :size => 16 %>
+    </p>
+    <p>
+      <fieldset>
+        <legend>Attributes</legend>
+        <% @lmce_file.lmce_attributes.sort{|a,b| a.lmce_attribute_type.id <=> b.lmce_attribute_type.id}.each do |a| -%>
+        <%= edit_attribute(a) %>
+        <% end -%>
+      </fieldset>
+    </p>
+  <%= form.submit "Update" %>
+  <% end -%>
+</fieldset>

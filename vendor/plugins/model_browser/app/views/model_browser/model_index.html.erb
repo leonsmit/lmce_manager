@@ -1,0 +1,51 @@
+<%
+=begin
+
+This template renders a list of model-classes with links to their index-pages.
+
+The calling controller *must* provide the following information
+
+@resources::
+  an array with the resources to display. Each entry must be a hash containing:
+  
+  ':controller':: The name of the controller-class handling the resource
+  ':display_name':: A user-friendly display-name for the resource
+  ':table_name':: The name of the resource's database table
+  ':model_class_name':: The name of the resource's model-class
+
+== Styling
+
+To support css-styling of the generated html, the following css-classes are used:
+
+genericIndex:: 
+  A div of this css-class spans the whole generated view-block. With this enclosing class,
+  you can individually style the tags used inside this block:
+  
+  heading_tag:: the parameter-provided tag for the heading
+  table:: the table containing the resource-list
+  tr:: each row in the resource-list
+  th:: the table-heading
+  td:: the table-entries
+  a:: links to the index-pages of each resource
+  
+=end
+%>
+<% @resources.sort! {|x,y| x[:display_name] <=> y[:display_name] } %>
+<div class="genericIndex">
+  <h1>Available Resources</h1>
+  <table>
+    <tr>
+      <th>Model object</th>
+      <th>DB-Table</th>
+      <th>Model class</th>
+    </tr>
+    <% @resources.each do |resource| %>
+      <% controller = resource[:controller] %>
+      <tr>
+        <td><%= link_to "#{resource[:display_name]}", :controller => controller %></td>
+        <td><%= link_to "#{resource[:table_name].upcase}", :controller => controller %></td>
+        <td><%= link_to "#{resource[:model_class_name]}", :controller => controller %></td>
+      </tr>
+    <% end %>
+  </table>
+</div>

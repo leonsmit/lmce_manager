@@ -1,0 +1,109 @@
+--- 
+- :name: Find Directories
+  :arg_type: none
+  :exclusive: true
+  :field_name: IsDirectory
+  :sql_conditional: true
+  :conditional: IsDirectory <> '0'
+  :help: Find only media that are directories
+- :name: Find Files
+  :arg_type: none
+  :exclusive: true
+  :field_name: IsDirectory
+  :sql_conditional: true
+  :conditional: IsDirectory = '0'
+  :help: Find only media that are files
+- :name: Has Path
+  :values: PlutoMedia::File.find(:all).collect {|record| record.Path}.uniq.sort
+  :arg_filter: arg.gsub("*","%").gsub("?","_")
+  :default_value: /home/public/data
+  :arg_type: string
+  :exclusive: false
+  :field_name: Path
+  :sql_conditional: true
+  :conditional: Path LIKE '?'
+  :help: Find media that has matching path.  glob wildcards (**,*,?) are permitted.  The double glob (**) matches multiple directories.  For example, "**/Comedy" matches all media whose parent directory is Comedy.
+- :name: Does Not Have Path
+  :values: PlutoMedia::File.find(:all).collect {|record| record.Path}.uniq.sort
+  :arg_filter: arg.gsub("*","%").gsub("?","_")
+  :default_value: /home/public/data
+  :arg_type: string
+  :exclusive: false
+  :field_name: Path
+  :sql_conditional: true
+  :conditional: Path LIKE '?'
+  :help: Find media that does not have a matching path.  glob wildcards (**,*,?) are permitted.  The double glob (**) matches multiple directories.  For example, "**/Comedy" matches all media whose parent directory is not Comedy.
+- :name: Has Filename
+  :values: PlutoMedia::File.find(:all).collect {|record| record.Filename}.uniq.sort
+  :arg_filter: arg.gsub("*","%").gsub("?","_")
+  :default_value: "*"
+  :arg_type: string
+  :exclusive: false
+  :field_name: Filename
+  :sql_conditional: true
+  :conditional: Filename LIKE '?'
+  :help: Find media that has matching filename.  glob wildcards (*,?) are permitted.  For example, "*Matrix*" matches all the Matrix movies.
+- :name: Does Not Have Filename
+  :values: PlutoMedia::File.find(:all).collect {|record| record.Filename}.uniq.sort
+  :arg_filter: arg.gsub("*","%").gsub("?","_")
+  :default_value: "*"
+  :arg_type: string
+  :exclusive: false
+  :field_name: Filename
+  :sql_conditional: true
+  :conditional: Filename LIKE '?'
+  :help: Find media that does not have a matching filename.  glob wildcards (*,?) are permitted.  For example, "The *" will match all files whose name does not start with "The ".
+- :name: Has MediaType
+  :values: available ||= {}; PlutoMain::MediaType.find(:all).collect {|record| available[record.Description] = record.PK_MediaType};available
+  :default_value: "3"
+  :arg_type: hash
+  :exclusive: false
+  :field_name: MediaType
+  :sql_conditional: true
+  :conditional: EK_MediaType = '?'
+  :help: Find media with this Media Type.
+- :values: available ||= {}; PlutoMain::MediaType.find(:all).collect {|record| available[record.Description] = record.PK_MediaType};available
+  :default_value: "3"
+  :name: Does Not Have MediaType
+  :arg_type: hash
+  :exclusive: false
+  :field_name: MediaType
+  :sql_conditional: true
+  :conditional: EK_MediaType = '?'
+  :help: Find media with any other Media Type.
+- :name: Has MediaSubType
+  :values: available ||= {}; PlutoMedia::MediaSubType.find(:all).collect {|record| available[record.Description] = record.PK_MediaSubType};available
+  :default_value: "3"
+  :arg_type: hash
+  :exclusive: false
+  :field_name: MediaSubType
+  :sql_conditional: true
+  :conditional: FK_MediaSubType = '?'
+  :help: Find media with this Media Subtype.
+- :name: Does Not Have MediaSubType
+  :values: available ||= {}; PlutoMedia::MediaSubType.find(:all).collect {|record| available[record.Description] = record.PK_MediaSubType};available
+  :default_value: "3"
+  :arg_type: hash
+  :exclusive: false
+  :field_name: MediaSubType
+  :sql_conditional: true
+  :conditional: FK_MediaSubType = '?'
+  :help: Find media with any other Media Subtype.
+- :name: Has File Format
+  :values: available ||= {}; PlutoMedia::FileFormat.find(:all).collect {|record| available[record.Description] = record.PK_FileFormat};available
+  :default_value: "3"
+  :arg_type: hash
+  :exclusive: false
+  :field_name: FileFormat
+  :sql_conditional: true
+  :conditional: FK_FileFormat = '?'
+  :help: Find media with this File Format.
+- :name: Does Not Have FileFormat
+  :values: available ||= {}; PlutoMedia::FileFormat.find(:all).collect {|record| available[record.Description] = record.PK_FileFormat};available
+  :default_value: "3"
+  :arg_type: hash
+  :exclusive: false
+  :field_name: FileFormat
+  :sql_conditional: true
+  :conditional: FK_FileFormat = '?'
+  :help: Find media with any other File Format.

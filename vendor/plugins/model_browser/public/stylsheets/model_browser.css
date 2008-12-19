@@ -1,0 +1,26 @@
+div.genericIndex table {
+	border-style: double;
+	width: 100%;
+}
+div.genericIndex td,th {
+	vertical-align: top;
+	text-align: left;
+}
+
+div.genericDetails table {
+	border-style: double;
+	width: 100%;
+}
+div.genericDetails td {
+	vertical-align: top;
+	text-align: left;
+}
+div.genericDetails th {
+	width: 25%;
+	vertical-align: top;
+	text-align: left;
+}
+.nullValue {
+	font-style: italic;
+	color: red;
+}

@@ -1,0 +1,200 @@
+= model_browser
+
+model_browser is a little helper-plugin to quickly build simple browser applications
+solely by defining the underlying model.
+
+It is 
+
+* aimed at developers to help them inspecting database-contents
+* *not* fancy looking, but rather basic - at least by now
+* quite useful - at least according to my co-workers ;-)
+* configurable
+* modifyable
+
+It features
+
+* filterable lists of model-objects including pagination
+* display of a model-objects attributes
+* display of a model-objects related objects
+* navigation through the object-relations
+* total RESTful-ness
+
+The underlying concept is, to define a generic controller and generic view-templates
+who inspect the model-objects' attributes and associations. To tweak the displayed
+attributes and the attributes used in index-lists, it provides class methods on 
+ActiveRecord::Base, thus allowing to do all browser-configuration in the model-objects.
+
+So all you have to do to build a fully functional browser-application is:
+
+* include the model_browser-plugin in your application (see Installation for details)
+* define your model-objects
+* map routings for your model-objects in routes.rb
+
+See the Usage- and Example-sections and the plugin-modules' RDOCs for details.
+
+
+== Installation
+
+=== Prerequisites
+
+model_browser needs two other plugins to be installed:
+
+* controller_prototyping: http://cntrlproto.rubyforge.org
+* will_paginate: http://github.com/mislav/will_paginate
+
+Install these plugins according to their installation instructions.
+
+=== Installation of model_browser
+
+Just drop the plugin into your application's plugin folder.
+
+
+== Usage
+
+As said before (not very DRY, I know ;-)), you can build a navigatable
+browser-apllication for your model-classes simply by defining the model-classes
+and mapping resource-routes for them. The following sub-sections describe
+in more detail, what model_browser provides and how you can configure
+the generic features to your needs.
+
+
+=== Provided views
+
+The plugin provides three different views; two of which are resource-specific and
+one is of general purpose.
+
+
+==== The Model Index
+
+This view provides a list of all the resources, which you have included in your
+routing. Each resource links to the resource's index-page.
+It is rendered by <tt>model_index</tt>-action of the controller-class ModelBrowserController.
+
+You might consider routing your application's root to that view as described in 
+section "Defining the routing".
+
+
+==== The resource index
+
+Each <tt>index</tt>-action on a resource displays a paginating list-view for the
+resource's instances.  
+The columns of the list depend on the model-class's definition. 
+Each entry is navigatable to the associated object's detail-view.
+The index-view provides a simple filter facility to individually limit the display
+for specific resource-instances and it supports paginating through 
+the <tt>will_paginate</tt>-plugin.
+
+By mapping the model-class as resource, this view is created by the resource's
+GET-requests, for example
+
+  GET /customers
+
+
+==== The resource details view
+
+Each <tt>show</tt>-action on a resource-instance displays a details-view for the
+object through the <tt>show</tt>-action of ModelBrowserController.
+As a result of the object's inspection, the following information is rendered:
+
+* The object's attributes. Which attributes are displayed depends on the
+  model definition.
+* For each of the object's associations a list of the associated target-objects,
+  each entry navigatable to the associated object's detail-view.
+
+By mapping the model-class as resource, this view is created by the resource's
+GET-requests, for example
+
+  GET /customers/1
+
+
+=== Defining the model
+
+For a quick and dirty, no-frills, bare-bones browser you hage to do nothing 
+special defining your model-classes. model_browser deduces defaults for 
+all views from the standard ActiveRecord::Base properties.
+
+However, you might consider enhancing your browsing experience by using
+the following class methods added to ActiveRecord::Base by the plugin.
+
+set_preferred_attributes:: 
+  Call this method with a list of the attributes to restrict the object's 
+  detail views. Attributes not contained in this list will be suppressed.
+  The default behaviour is to include all the object's attributes.
+
+set_preferred_index_columns::
+  Call this method with a list of attributes to be used on list-views for
+  the resource.
+  The default behaviour is to use the primary key(s) as columns for the
+  index list.
+
+set_filter_attributes::
+  Call this method with a list of attributes to be used for filtering the
+  index-views.
+  The default behaviour is to use the same attributes used as columns
+  for the index view.
+
+set_display_name::
+  Call this method to define a "friendly" name for the resource-class on
+  the views.
+  This defaults to the model-class's table-name.
+
+
+=== Defining the routing
+
+Each model-class to browse, has to be mapped in your <tt>routes.rb</tt> as a resource by 
+
+  map.resource :model_class
+
+Additionally you might consider to define a routing to display the model-index -
+for example as your application's root by
+
+  map.root :controller => 'ModelBrowserController', :action => 'model_index'
+
+
+=== Styling the views
+
+The generated views are plain, ugly, bare-bones html. But fortunately they
+are stylable throug css-classes :-)
+
+The plugin contains a sample style in it's <tt>public/stylesheets</tt> directory;
+refer to that to apply the desired styling to the generated views.
+
+
+=== Modifiying the default views and controller
+
+Of course you can enhance the provided default ModelBrowserController by 
+monkey patching it to your needs.
+
+The plugin adds it's path with the provided default views to the *end* of
+Rails's view-paths. So simply by putting a modified version of the provided
+views into your application's <tt>app/views</tt>-folder you can override them.
+
+
+== Example
+
+I'll provide a documented sample application showing model_browser's features
+soon. Stay tuned :-)
+
+
+== Limitations
+
+Well, at the moment this plugin is at it's first working stage, so there may be a lot
+of glitches, quirks and errors. However I'd like to point out the following limitations, 
+which are addressed as to-do for the future:
+
+* There is no input-checking on the filter-attributes. All you enter is handed over
+  to the database driver as is. So wrong input formats may simply yield in exception
+  error pages.
+  
+* The index-lists of related objects for a model object's associations are
+  not paginating. If a <tt>has_many</tt> relation has <b>really many</b> target objects,
+  you'll have to wait for the whole result set to be fetched and rendered and you'll
+  get a really long list.
+
+model_browser is developed and tested with Rails 2.0.2.
+
+== Author and Credits
+
+Hosted at: http://rubyforge.org/projects/modelbrowser
+
+Copyright (c) 2008 Frank Kuepper, Frank.Kuepper@gmx.de, released under the MIT license

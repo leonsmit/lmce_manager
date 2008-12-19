@@ -1,0 +1,41 @@
+<h1>LinuxMCE / DVDProfiler Synchronization</h1>
+
+<h2>Backup Your Database</h2>
+
+I highly recommend backing up your database.  There are two methods, so you might want to do both:
+<ul>
+	<li>LinuxMCE Wiki's <a href="http://wiki.linuxmce.org/index.php/Backup_and_Restore">Backup and Restore</a>.  Note this backs up your devices and some other configuration info.  It does not backup your media database.</li>
+	<li>A full database backup can be done with this command:
+		<ul>
+			<li>mysqldump -u root --quote-names --allow-keywords --add-drop-table --all-databases &gt; /home/linuxmce/databasebackup</li>
+		</ul>
+		and the restore with:
+		<ul>
+			<li>mysql -u root &lt; /home/linuxmce/databasebackup</li>
+		</ul>
+	</li>
+</ul>
+
+<h2>Workflow</h2>
+<ol>
+	<li>Make exports directory (I suggest: ~/DVD Profiler/Databases/Exports)</li>
+	<li>Add DVD to and/or update DVDProfiler profiles</li>
+	<li>Export DVDProfiler Profiles
+		<ul>
+			<li>File</li>
+			<li>Export Profile Database</li>
+			<li>Accept</li>
+			<li>One file per profile</li>
+			<li>Export Directory = ~/DVD Profiler/Databases/Exports</li>
+		</ul>
+	</li>
+	<li>Copy or link Export Directory to dcerouter:/var/www/rails/lmce_manager/dvdprofiler</li>
+	<li>Copy or link Image Directory (~/DVD Profiler/Databases/Default/Images) to dcerouter:/var/www/rails/lmce_manager/dvdprofiler/Images</li>
+	<li>Copy DVD to disk using LinuxMCE</li>
+	<li><%= link_to 'Sync ISBN Attributes', sync_isbns_dvd_profiler_path %></li>
+	<li><%= link_to 'Sync Media Attributes', sync_attributes_dvd_profiler_path %></li>
+	<li><%= link_to 'List Media without ISBN Attribute', report_missing_isbns_dvd_profiler_path %></li>
+	<li><%= link_to 'List Media in DVD Profiler but not in LinuxMCE', report_not_ripped_dvd_profiler_path %></li>
+	<li>Manually add ISBN Attribute to media listed using Pluto Admin and referencing DVDProfiler</li>
+	<li>Repeat the last three steps as needed</li>
+</ul>

@@ -1,0 +1,38 @@
+defaults: &defaults
+  adapter: mysql
+  host: localhost
+  timeout: 5000
+  username: root
+  password: mysha1
+
+development:
+  database: lmce_manager_development
+  <<: *defaults
+
+test:
+  database: lmce_manager_test
+  <<: *defaults
+
+production:
+  database: lmce_manager_production
+  <<: *defaults
+
+pluto_main_database:
+  database: pluto_main
+  <<: *defaults
+
+pluto_media_database:
+  database: pluto_media
+  <<: *defaults
+
+pluto_myth_database:
+  database: pluto_myth
+  <<: *defaults
+
+pluto_security_database:
+  database: pluto_security
+  <<: *defaults
+
+pluto_telecom_database:
+  database: pluto_telecom
+  <<: *defaults

@@ -1,0 +1,3 @@
+OpenDatabase Default
+ExportXMLAll db/dvdprofiler/Collection.xml NoEasterEggs NoLocks NoNotes NoTags
+Close

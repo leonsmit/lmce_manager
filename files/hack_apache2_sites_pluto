@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby
+
+filespec = '/etc/apache2/sites-available/pluto'
+backup = '/etc/apache2/sites-available/pluto.orig'
+preexisting_pattern = /^\s*RailsBaseURI\s+"\/lmce_manager"/
+insert_line = 'RailsBaseURI "/lmce_manager"'
+
+if IO.readlines(filespec).select{|line| line =~ preexisting_pattern}.empty?
+        FileUtils.rm(backup) if File.exist? backup
+        FileUtils.mv(filespec, backup)
+        File.open(filespec, "w") do |file|
+		file.fputs insert_line
+                IO.readlines(backup).each { |line| file.puts line }
+        end
+end

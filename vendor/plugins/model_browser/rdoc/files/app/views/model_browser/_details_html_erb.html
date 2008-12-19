@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>File: _details.html.erb</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+  <div id="fileHeader">
+    <h1>_details.html.erb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>app/views/model_browser/_details.html.erb
+      </td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Wed Jul 16 11:32:48 +0200 2008</td>
+    </tr>
+    </table>
+  </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+&lt;%
+</p>
+<h1>begin</h1>
+<p>
+This view partial generates a display of model-object&#8216;s attributes.
+Basically this view consists of
+</p>
+<ul>
+<li>a heading identifying the model-object&#8216;s class by:
+
+<ul>
+<li>table-name
+
+</li>
+<li>optional display-name
+
+</li>
+</ul>
+</li>
+<li>a table displaying the current object&#8216;s attributes and their values
+
+</li>
+</ul>
+<h2>Locals</h2>
+<p>
+The following locals <b>must</b> be provided to generate the view:
+</p>
+<table>
+<tr><td valign="top">object:</td><td>The object to display.
+
+</td></tr>
+<tr><td valign="top">object_class:</td><td>The class of the object to display. If it is granted that object is never
+nil, this local may be omitted, as it is possible to detect it from the
+object.
+
+</td></tr>
+</table>
+<p>
+In addition the following optional locals can be used to tweak the view:
+</p>
+<table>
+<tr><td valign="top">heading_tag:</td><td>html-tag for the generated heading; default: <tt>span</tt> A heading may be
+suppressed totally by providing <tt>:none</tt>
+
+</td></tr>
+<tr><td valign="top">only:</td><td>a list of attribute-names to limit the display to. If this parameter is
+given, only the attributes with the provided names are displayed.
+
+</td></tr>
+<tr><td valign="top">exclude:</td><td>a list of attribute-names to exclude from the display. If this parameter is
+given, the attributes with the provided names are not displayed.
+
+</td></tr>
+</table>
+<h2>Styling</h2>
+<p>
+To support css-styling of the generated html, the following css-classes are
+used:
+</p>
+<table>
+<tr><td valign="top">genericDetails:</td><td>A div of this css-class spans the whole generated view-block. With this
+enclosing class, you can individually style the tags used inside this
+block:
+
+<table>
+<tr><td valign="top">heading_tag:</td><td>the parameter-provided tag for the heading
+
+</td></tr>
+<tr><td valign="top">table:</td><td>the table containing the attributes
+
+</td></tr>
+<tr><td valign="top">tr:</td><td>each row in the attributes-table
+
+</td></tr>
+<tr><td valign="top">th:</td><td>the attributes&#8217; names
+
+</td></tr>
+<tr><td valign="top">td:</td><td>the attributes&#8217; values
+
+</td></tr>
+</table>
+</td></tr>
+<tr><td valign="top">nullValue:</td><td>This css-class marks the display of nil-values of attributes (td-tag),
+which gives the opportunity to style them diffently.
+
+</td></tr>
+</table>
+<h1>end</h1>
+<p>
+%&gt;
+</p>
+<p>
+&lt;%
+</p>
+<pre>
+  heading_tag ||= 'span'
+  only ||= []
+  exclude ||= []
+  toDisplay = []
+  if !only.empty?
+    toDisplay = only.map {|x| x.to_s}
+  else
+    toDisplay = object.class.column_names unless object.nil?
+  end
+  toDisplay -= exclude.map {|x| x.to_s} if exclude
+  object_class = object.class if object_class.nil? &amp;&amp; !object.nil?
+</pre>
+<p>
+%&gt; &lt;div class=&quot;genericDetails&quot;&gt;
+</p>
+<pre>
+  &lt;% if heading_tag != :none %&gt;
+    &lt;&lt;%= heading_tag.to_s %&gt;&gt;
+      &lt;%=object_class.table_name.upcase%&gt; - &lt;%=object_class.display_name%&gt;
+    &lt;/&lt;%= heading_tag.to_s %&gt;&gt;
+  &lt;% end %&gt;
+  &lt;table&gt;
+      &lt;% toDisplay.each do |column| %&gt;
+        &lt;%
+          value = object.display_attribute(column, :detail)
+          # try to pretty-print everything looking like xml
+          formatted = String.new
+          doc = REXML::Document.new h value.to_s
+          doc.write(formatted, 2)
+          value = formatted.gsub(/&gt;\s*([^\s&lt;])/, &quot;&gt;\\1&quot;).gsub(/([^\s&gt;])\s*&lt;\//, &quot;\\1&lt;/&quot;) unless formatted.nil? || formatted.strip.length == 0
+        %&gt;
+        &lt;tr&gt;
+          &lt;th&gt;&lt;%= column.upcase %&gt;&lt;/th&gt;
+          &lt;td&gt;
+            &lt;% if value.nil? %&gt;
+              &lt;span class=&quot;nullValue&quot;&gt;NULL&lt;/b&gt;
+            &lt;% else %&gt;
+              &lt;%= (h value).gsub(&quot;\n&quot;, &quot;&lt;br/&gt;&quot;).gsub(&quot; &quot;, &quot;&amp;nbsp;&quot;) %&gt;
+            &lt;%end%&gt;
+          &lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;% end %&gt;
+  &lt;/table&gt;
+</pre>
+<p>
+&lt;/div&gt;
+</p>
+
+    </div>
+
+
+   </div>
+
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

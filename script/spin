@@ -1,0 +1,1 @@
+/usr/bin/mongrel_rails cluster::start -C /var/www/rails/lmce_manager/current/config/mongrel_cluster.yml

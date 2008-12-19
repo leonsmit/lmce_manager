@@ -1,0 +1,18 @@
+<html>
+	<head>
+	<title>Media Picture Reference</title>
+	</head>
+	<body>
+		<table border="1">
+			<tr><td>Picture</td><td>Title</td><td>ISBN</td><td>Delete Pictures Rake Task</td></tr>
+			<% PlutoMedia::LmceFile.files.dvds.find(:all).each do |f| %>
+				<tr>
+					<td><%= f.pictures.collect{|pict|   File.exist?(pict) ? "<img src=\"#{pict.gsub('/home/mediapics','mediapics')}\"/>" : ""}.join(' ') %></td>
+					<td><%= f.title %></td>
+					<td><%= f.isbn %></td>
+					<td><%= "rake lmce:remove_pictures_by_file_id FK_File=#{f.id}" %></td>
+				</tr>
+			<% end %>
+		</table>
+	</body>
+</html>

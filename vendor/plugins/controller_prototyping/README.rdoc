@@ -1,0 +1,193 @@
+= ControllerPrototyping
+
+DRY is one often repeated postulate of rails.
+
+However, building a simple viewer application for a legacy database with a lot of model objects, 
+I was disappointed of the amount of generated scaffold code for controllers and views using the 
+standard "Rails way".
+
+Sure, there are quite some plugins to DRY-up the generated code (like rest_controller or 
+resource_this)  - but, heck, why do I still have to create all that individual controller-classes? 
+Why don't let the system generate them by itself from just ONE prototype that defines the 
+generic behaviour.
+
+Enter ControllerPrototyping...
+
+This plugin monkey patches Rail's routing and instantiates a controller-class out of a defined prototype-class
+whenever there is no explicit controller-class available, freeing you from the urge to define a load of 
+similar-looking controller-classes.
+
+The concept is:
+
+* Just define the mappings for your resources in routes.rb - business as usual
+* Implement dedicated controllers which do specialized work - business as usual
+* Implement a prototype controller for your application and configure the name of the
+  controller-prototype-class - assistive magic
+* Whenever routing doesn't find a dedicated controller implementation it will instantiate
+  a controller by using the prototype class - magic ;-)
+
+Inside the implementation of the prototype controller you get information about the actual
+resource class, for which the controller was instantiated (for example "Customer" or "Post"),
+by the class- and instance-methods
+
+  model_class
+  
+In addition the resources-name (for example "customers" or "posts") is published by the
+class- and instance-methods
+
+  resources_name
+  
+Of course, you are free to implement dedicated controllers for individual model classes
+using the standard approach if needed.
+
+Dedicated controllers can share all of the prototype's controller implementation by
+inheriting. To tell the prototyped implementation about the model class, the controller
+is managing, include a call to
+
+  set_mode_class :YourModelClassName
+  
+into the specific controller.
+    
+If you plan on doing so, you have to include a call to <tt>acts_as_prototype</tt> into
+your PrototypeController. See Example and Limitations for more details.
+
+
+== Installation
+
+Just drop the plugin into the plugins-folder of your application.
+
+
+== Example
+
+Let's assume three model classes:
+
+  class ModelA
+  end
+
+  class ModelB
+  end
+
+  class ModelC
+  end
+
+To implement a REST-based application for those classes, we define
+
+  config/routes.rb:
+    ActionController::Routing::Routes.draw do |map|
+      map.resources :model_as
+      map.resources :model_bs
+      map.resources :model_cs
+    end
+
+The traditional approach now would be to implement three controllers ModelAsController, 
+ModelBsController and ModelCsController. If all these are simple and standard, all three
+controllers would look very much the same (though all may be very short by using the
+resources_controller-plugin for example). With ControllerPrototyping you just define ONE
+controller prototype class according to your needs
+
+  app/controllers/prototype_controller.rb:
+    class PrototypeController < ApplicationController
+      # GET /resources/1
+      # GET /resources/1.xml
+      def show
+        @model_instance= model_class.find(params[:id])
+
+        respond_to do |format|
+          format.html { render :template => 'prototype/show' }
+          format.xml  { render :xml => @model_instance }
+        end
+      end
+    end
+    
+configure this as the prototype class
+
+  config/routes.rb or config/environment.rb:
+    ControllerPrototyping::Factory::prototype_class_name = :PrototypeController
+    
+and implement a generic template for displaying a model instance; for example
+
+  app/views/prototype/show.html.erb:
+    <h1><%=@model_instance.class.table_name.upcase%></h1>
+    <table>
+      <% @model_instance.class.column_names.each do |column| %>
+        <tr>
+          <th><%= column.upcase %></th>
+          <td><%= h (@model_instance.send(column) %></td>
+        </tr>
+      <% end %>
+    </table>
+
+Et voilá - your application is ready to fulfill get-requests for all three model classes!
+
+So, assuming other model classes arise, you just define the routing - the rest is taken
+care of by your friendly magician ;-)
+
+Assume, we feel the urge to do something special for a dedicated model class; for example
+ModelC, we can implement a specialized controller for that:
+
+  app/controllers/model_cs_controller.rb:
+    class ModelCsController < PrototypeController
+    
+      set_model_class :ModelC
+      
+      def somethingSpecial
+         # very special code
+      end
+    end
+    
+If doing so, we have to include a call to <tt>acts_as_prototype</tt> into
+our PrototypeController:
+
+  app/controllers/prototype_controller.rb:
+    class PrototypeController < ApplicationController
+      
+      acts_as_prototype
+      
+      # GET /resources/1
+      # GET /resources/1.xml
+      def show
+        @model_instance= model_class.find(params[:id])
+
+        respond_to do |format|
+          format.html { render :template => 'prototype/show' }
+          format.xml  { render :xml => @model_instance }
+        end
+      end
+    end
+
+See Limitations for details.
+    
+
+== Limitations
+
+As of now the prototype-class cannot use any resource-controller-generating plug-ins
+like resource_controller or resource_this, because of it's generic nature - by the time it
+is loaded, it doesn't know the corresponding resource-class.
+
+If try inheriting dedicated controllers from your prototype controller, the prototype-utility
+methods <tt>model_class</tt>, <tt>resources_name</tt> and <tt>set_model_class</tt>
+are not defined and thus not accessible. If you don't need them, everything is fine. 
+
+If you do need them - and I think that is in most cases - you'll have to include a call to
+
+  acts_as_prototype
+  
+in your prototype controller class as a workaround.
+
+For example:
+
+  class PrototypeController < ApplicationController
+    acts_as_prototype
+  end
+  
+  class SpecificsController < PrototypeController
+    set_model_class :Specific
+  end
+
+I'll try my best to figure out solutions to get rid of these limitations, but by now you'll have
+to live with it :-)
+
+
+== Author and Credits
+
+Copyright (c) 2008 Frank Kuepper, Frank.Kuepper@gmx.de, released under the MIT license

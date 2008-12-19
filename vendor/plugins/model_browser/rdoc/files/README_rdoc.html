@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>File: README.rdoc</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+  <div id="fileHeader">
+    <h1>README.rdoc</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>README.rdoc
+      </td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Wed Jul 16 14:16:14 +0200 2008</td>
+    </tr>
+    </table>
+  </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <h1>model_browser</h1>
+<p>
+model_browser is a little helper-plugin to quickly build simple browser
+applications solely by defining the underlying model.
+</p>
+<p>
+It is
+</p>
+<ul>
+<li>aimed at developers to help them inspecting database-contents
+
+</li>
+<li><b>not</b> fancy looking, but rather basic - at least by now
+
+</li>
+<li>quite useful - at least according to my co-workers ;-)
+
+</li>
+<li>configurable
+
+</li>
+<li>modifyable
+
+</li>
+</ul>
+<p>
+It features
+</p>
+<ul>
+<li>filterable lists of model-objects including pagination
+
+</li>
+<li>display of a model-objects attributes
+
+</li>
+<li>display of a model-objects related objects
+
+</li>
+<li>navigation through the object-relations
+
+</li>
+<li>total RESTful-ness
+
+</li>
+</ul>
+<p>
+The underlying concept is, to define a generic controller and generic
+view-templates who inspect the model-objects&#8217; attributes and
+associations. To tweak the displayed attributes and the attributes used in
+index-lists, it provides class methods on <a
+href="../classes/ActiveRecord/Base.html">ActiveRecord::Base</a>, thus
+allowing to do all browser-configuration in the model-objects.
+</p>
+<p>
+So all you have to do to build a fully functional browser-application is:
+</p>
+<ul>
+<li>include the model_browser-plugin in your application (see Installation for
+details)
+
+</li>
+<li>define your model-objects
+
+</li>
+<li>map routings for your model-objects in routes.rb
+
+</li>
+</ul>
+<p>
+See the Usage- and Example-sections and the plugin-modules&#8217; RDOCs for
+details.
+</p>
+<h2>Installation</h2>
+<h3>Prerequisites</h3>
+<p>
+model_browser needs two other plugins to be installed:
+</p>
+<ul>
+<li>controller_prototyping: <a
+href="http://cntrlproto.rubyforge.org">cntrlproto.rubyforge.org</a>
+
+</li>
+<li>will_paginate: <a
+href="http://github.com/mislav/will_paginate">github.com/mislav/will_paginate</a>
+
+</li>
+</ul>
+<p>
+Install these plugins according to their installation instructions.
+</p>
+<h3>Installation of model_browser</h3>
+<p>
+Just drop the plugin into your application&#8216;s plugin folder.
+</p>
+<h2>Usage</h2>
+<p>
+As said before (not very DRY, I know ;-)), you can build a navigatable
+browser-apllication for your model-classes simply by defining the
+model-classes and mapping resource-routes for them. The following
+sub-sections describe in more detail, what model_browser provides and how
+you can configure the generic features to your needs.
+</p>
+<h3>Provided views</h3>
+<p>
+The plugin provides three different views; two of which are
+resource-specific and one is of general purpose.
+</p>
+<h4>The Model Index</h4>
+<p>
+This view provides a list of all the resources, which you have included in
+your routing. Each resource links to the resource&#8216;s index-page. It is
+rendered by <tt>model_index</tt>-action of the controller-class <a
+href="../classes/ModelBrowserController.html">ModelBrowserController</a>.
+</p>
+<p>
+You might consider routing your application&#8216;s root to that view as
+described in section &quot;Defining the routing&quot;.
+</p>
+<h4>The resource index</h4>
+<p>
+Each <tt>index</tt>-action on a resource displays a paginating list-view
+for the resource&#8216;s instances. The columns of the list depend on the
+model-class&#8216;s definition. Each entry is navigatable to the associated
+object&#8216;s detail-view. The index-view provides a simple filter
+facility to individually limit the display for specific resource-instances
+and it supports paginating through the <tt>will_paginate</tt>-plugin.
+</p>
+<p>
+By mapping the model-class as resource, this view is created by the
+resource&#8216;s GET-requests, for example
+</p>
+<pre>
+  GET /customers
+</pre>
+<h4>The resource details view</h4>
+<p>
+Each <tt>show</tt>-action on a resource-instance displays a details-view
+for the object through the <tt>show</tt>-action of <a
+href="../classes/ModelBrowserController.html">ModelBrowserController</a>.
+As a result of the object&#8216;s inspection, the following information is
+rendered:
+</p>
+<ul>
+<li>The object&#8216;s attributes. Which attributes are displayed depends on
+the model definition.
+
+</li>
+<li>For each of the object&#8216;s associations a list of the associated
+target-objects, each entry navigatable to the associated object&#8216;s
+detail-view.
+
+</li>
+</ul>
+<p>
+By mapping the model-class as resource, this view is created by the
+resource&#8216;s GET-requests, for example
+</p>
+<pre>
+  GET /customers/1
+</pre>
+<h3>Defining the model</h3>
+<p>
+For a quick and dirty, no-frills, bare-bones browser you hage to do nothing
+special defining your model-classes. model_browser deduces defaults for all
+views from the standard <a
+href="../classes/ActiveRecord/Base.html">ActiveRecord::Base</a> properties.
+</p>
+<p>
+However, you might consider enhancing your browsing experience by using the
+following class methods added to <a
+href="../classes/ActiveRecord/Base.html">ActiveRecord::Base</a> by the
+plugin.
+</p>
+<table>
+<tr><td valign="top">set_preferred_attributes:</td><td>Call this method with a list of the attributes to restrict the
+object&#8216;s detail views. Attributes not contained in this list will be
+suppressed. The default behaviour is to include all the object&#8216;s
+attributes.
+
+</td></tr>
+<tr><td valign="top">set_preferred_index_columns:</td><td>Call this method with a list of attributes to be used on list-views for the
+resource. The default behaviour is to use the primary key(s) as columns for
+the index list.
+
+</td></tr>
+<tr><td valign="top">set_filter_attributes:</td><td>Call this method with a list of attributes to be used for filtering the
+index-views. The default behaviour is to use the same attributes used as
+columns for the index view.
+
+</td></tr>
+<tr><td valign="top">set_display_name:</td><td>Call this method to define a &quot;friendly&quot; name for the
+resource-class on the views. This defaults to the model-class&#8216;s
+table-name.
+
+</td></tr>
+</table>
+<h3>Defining the routing</h3>
+<p>
+Each model-class to browse, has to be mapped in your <tt>routes.rb</tt> as
+a resource by
+</p>
+<pre>
+  map.resource :model_class
+</pre>
+<p>
+Additionally you might consider to define a routing to display the
+model-index - for example as your application&#8216;s root by
+</p>
+<pre>
+  map.root :controller =&gt; 'ModelBrowserController', :action =&gt; 'model_index'
+</pre>
+<h3>Styling the views</h3>
+<p>
+The generated views are plain, ugly, bare-bones html. But fortunately they
+are stylable throug css-classes :-)
+</p>
+<p>
+The plugin contains a sample style in it&#8216;s
+<tt>public/stylesheets</tt> directory; refer to that to apply the desired
+styling to the generated views.
+</p>
+<h3>Modifiying the default views and controller</h3>
+<p>
+Of course you can enhance the provided default <a
+href="../classes/ModelBrowserController.html">ModelBrowserController</a> by
+monkey patching it to your needs.
+</p>
+<p>
+The plugin adds it&#8216;s path with the provided default views to the
+<b>end</b> of Rails&#8216;s view-paths. So simply by putting a modified
+version of the provided views into your application&#8216;s
+<tt>app/views</tt>-folder you can override them.
+</p>
+<h2>Example</h2>
+<p>
+I&#8216;ll provide a documented sample application showing
+model_browser&#8216;s features soon. Stay tuned :-)
+</p>
+<h2>Limitations</h2>
+<p>
+Well, at the moment this plugin is at it&#8216;s first working stage, so
+there may be a lot of glitches, quirks and errors. However I&#8216;d like
+to point out the following limitations, which are addressed as to-do for
+the future:
+</p>
+<ul>
+<li>There is no input-checking on the filter-attributes. All you enter is
+handed over to the database driver as is. So wrong input formats may simply
+yield in exception error pages.
+
+</li>
+<li>The index-lists of related objects for a model object&#8216;s associations
+are not paginating. If a <tt>has_many</tt> relation has <b>really many</b>
+target objects, you&#8216;ll have to wait for the whole result set to be
+fetched and rendered and you&#8216;ll get a really long list.
+
+</li>
+</ul>
+<p>
+model_browser is developed and tested with Rails 2.0.2.
+</p>
+<h2>Author and Credits</h2>
+<p>
+Hosted at: <a
+href="http://rubyforge.org/projects/modelbrowser">rubyforge.org/projects/modelbrowser</a>
+</p>
+<p>
+Copyright (c) 2008 Frank Kuepper, Frank.Kuepper@gmx.de, released under the
+MIT license
+</p>
+
+    </div>
+
+
+   </div>
+
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

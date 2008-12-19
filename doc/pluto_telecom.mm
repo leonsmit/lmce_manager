@@ -1,0 +1,1580 @@
+    <map version='0.9.0_Beta_8'>
+      <node TEXT='pluto_telecom' ID='Freemind_Link_1028988207' CREATED='1203540656' MODIFIED='1203540656'>
+        <node TEXT='CallersForMe' ID='Freemind_Link_902547061' CREATED='1203540656' POSITION='right' MODIFIED='1203540656'>
+          <node TEXT='PK_CallersForMe' ID='Freemind_Link_1384508339' CREATED='1203540656' MODIFIED='1203540656'>
+            <icon BUILTIN='full-1'/>
+            <icon BUILTIN='password'/>
+          </node>
+          <node TEXT='EK_Users' ID='Freemind_Link_1182561961' CREATED='1203540656' MODIFIED='1203540656'>
+            <font NAME='SansSerif' SIZE='12' BOLD='true'/>
+          </node>
+          <node TEXT='PhoneNumber' ID='Freemind_Link_477598159' CREATED='1203540656' MODIFIED='1203540656'/>
+          <richcontent TYPE='NOTE'>
+            <html>
+              <head/>
+              <body>
+                <p>
+                  <TABLE BORDER='1'>
+                    <TR>
+                      <TH>Field</TH>
+                      <TH>Type</TH>
+                      <TH>Null</TH>
+                      <TH>Key</TH>
+                      <TH>Default</TH>
+                      <TH>Extra</TH>
+                    </TR>
+                    <TR>
+                      <TD>PK_CallersForMe</TD>
+                      <TD>int(11)</TD>
+                      <TD>NO</TD>
+                      <TD>PRI</TD>
+                      <TD>NULL</TD>
+                      <TD>auto_increment</TD>
+                    </TR>
+                    <TR>
+                      <TD>EK_Users</TD>
+                      <TD>int(11)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>PhoneNumber</TD>
+                      <TD>varchar(100)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_id</TD>
+                      <TD>int(11)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_batch</TD>
+                      <TD>int(11)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_user</TD>
+                      <TD>int(11)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_frozen</TD>
+                      <TD>tinyint(1)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>0</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_mod</TD>
+                      <TD>timestamp</TD>
+                      <TD>NO</TD>
+                      <TD/>
+                      <TD>CURRENT_TIMESTAMP</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_restrict</TD>
+                      <TD>int(11)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                  </TABLE>
+                </p>
+              </body>
+            </html>
+          </richcontent>
+        </node>
+        <node TEXT='Contact' ID='Freemind_Link_345977235' CREATED='1203540656' POSITION='right' MODIFIED='1203540656'>
+          <node TEXT='PK_Contact' ID='Freemind_Link_1162368255' CREATED='1203540656' MODIFIED='1203540656'>
+            <icon BUILTIN='full-1'/>
+            <icon BUILTIN='password'/>
+          </node>
+          <node TEXT='Name' ID='Freemind_Link_224406935' CREATED='1203540656' MODIFIED='1203540656'/>
+          <node TEXT='Company' ID='Freemind_Link_1690701807' CREATED='1203540656' MODIFIED='1203540656'/>
+          <node TEXT='JobDescription' ID='Freemind_Link_1104189322' CREATED='1203540656' MODIFIED='1203540656'/>
+          <node TEXT='Title' ID='Freemind_Link_1152440212' CREATED='1203540656' MODIFIED='1203540656'/>
+          <node TEXT='Email' ID='Freemind_Link_1082873860' CREATED='1203540656' MODIFIED='1203540656'/>
+          <node TEXT='EntryID' ID='Freemind_Link_844494821' CREATED='1203540656' MODIFIED='1203540656'/>
+          <node TEXT='EK_Users' ID='Freemind_Link_1761679676' CREATED='1203540656' MODIFIED='1203540656'>
+            <font NAME='SansSerif' SIZE='12' BOLD='true'/>
+          </node>
+          <richcontent TYPE='NOTE'>
+            <html>
+              <head/>
+              <body>
+                <p>
+                  <TABLE BORDER='1'>
+                    <TR>
+                      <TH>Field</TH>
+                      <TH>Type</TH>
+                      <TH>Null</TH>
+                      <TH>Key</TH>
+                      <TH>Default</TH>
+                      <TH>Extra</TH>
+                    </TR>
+                    <TR>
+                      <TD>PK_Contact</TD>
+                      <TD>int(11)</TD>
+                      <TD>NO</TD>
+                      <TD>PRI</TD>
+                      <TD>NULL</TD>
+                      <TD>auto_increment</TD>
+                    </TR>
+                    <TR>
+                      <TD>Name</TD>
+                      <TD>varchar(60)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>Company</TD>
+                      <TD>varchar(60)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>JobDescription</TD>
+                      <TD>varchar(60)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>Title</TD>
+                      <TD>varchar(60)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>Email</TD>
+                      <TD>varchar(60)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>EntryID</TD>
+                      <TD>varchar(60)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>EK_Users</TD>
+                      <TD>int(11)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_id</TD>
+                      <TD>int(11)</TD>
+                      <TD>YES</TD>
+                      <TD>UNI</TD>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_batch</TD>
+                      <TD>int(11)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_user</TD>
+                      <TD>int(11)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_frozen</TD>
+                      <TD>tinyint(1)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>0</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_mod</TD>
+                      <TD>timestamp</TD>
+                      <TD>NO</TD>
+                      <TD/>
+                      <TD>CURRENT_TIMESTAMP</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_restrict</TD>
+                      <TD>int(11)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                  </TABLE>
+                </p>
+              </body>
+            </html>
+          </richcontent>
+        </node>
+        <node TEXT='Contact_Users_Sync' ID='Freemind_Link_455074036' CREATED='1203540656' POSITION='right' MODIFIED='1203540656'>
+          <node TEXT='FK_Contact' ID='Freemind_Link_1500482419' CREATED='1203540656' MODIFIED='1203540656'>
+            <icon BUILTIN='full-1'/>
+            <icon BUILTIN='password'/>
+            <arrowlink ENDARROW='Default' DESTINATION='Freemind_Link_1162368255' COLOR='#787874' STARTINCLINATION='500;0;' ID='Freemind_Arrow_Link_102497896' STARTARROW='None' ENDINCLINATION='500;0;'/>
+          </node>
+          <node TEXT='EK_Users' ID='Freemind_Link_1072933516' CREATED='1203540656' MODIFIED='1203540656'>
+            <font NAME='SansSerif' SIZE='12' BOLD='true'/>
+            <icon BUILTIN='full-1'/>
+            <icon BUILTIN='password'/>
+          </node>
+          <node TEXT='SyncID' ID='Freemind_Link_1868663647' CREATED='1203540656' MODIFIED='1203540656'/>
+          <node TEXT='LastModPluto' ID='Freemind_Link_1785775564' CREATED='1203540656' MODIFIED='1203540656'/>
+          <node TEXT='LastModSync' ID='Freemind_Link_223521203' CREATED='1203540656' MODIFIED='1203540656'/>
+          <richcontent TYPE='NOTE'>
+            <html>
+              <head/>
+              <body>
+                <p>
+                  <TABLE BORDER='1'>
+                    <TR>
+                      <TH>Field</TH>
+                      <TH>Type</TH>
+                      <TH>Null</TH>
+                      <TH>Key</TH>
+                      <TH>Default</TH>
+                      <TH>Extra</TH>
+                    </TR>
+                    <TR>
+                      <TD>FK_Contact</TD>
+                      <TD>int(11)</TD>
+                      <TD>NO</TD>
+                      <TD>PRI</TD>
+                      <TD>0</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>EK_Users</TD>
+                      <TD>int(11)</TD>
+                      <TD>NO</TD>
+                      <TD>PRI</TD>
+                      <TD>0</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>SyncID</TD>
+                      <TD>varchar(30)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>LastModPluto</TD>
+                      <TD>datetime</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>LastModSync</TD>
+                      <TD>datetime</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_id</TD>
+                      <TD>int(11)</TD>
+                      <TD>YES</TD>
+                      <TD>UNI</TD>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_batch</TD>
+                      <TD>int(11)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_user</TD>
+                      <TD>int(11)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_frozen</TD>
+                      <TD>tinyint(1)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>0</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_mod</TD>
+                      <TD>timestamp</TD>
+                      <TD>NO</TD>
+                      <TD/>
+                      <TD>CURRENT_TIMESTAMP</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_restrict</TD>
+                      <TD>int(11)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                  </TABLE>
+                </p>
+              </body>
+            </html>
+          </richcontent>
+        </node>
+        <node TEXT='IncomingLog' ID='Freemind_Link_1828183799' CREATED='1203540656' POSITION='right' MODIFIED='1203540656'>
+          <node TEXT='PK_IncomingLog' ID='Freemind_Link_755401065' CREATED='1203540656' MODIFIED='1203540656'>
+            <icon BUILTIN='full-1'/>
+            <icon BUILTIN='password'/>
+          </node>
+          <node TEXT='DateTime' ID='Freemind_Link_932844763' CREATED='1203540656' MODIFIED='1203540656'/>
+          <node TEXT='FK_PhoneNumber' ID='Freemind_Link_971816122' CREATED='1203540656' MODIFIED='1203540656'>
+            <arrowlink ENDARROW='Default' DESTINATION='Freemind_Link_1414230207' COLOR='#4376a8' STARTINCLINATION='500;0;' ID='Freemind_Arrow_Link_1664786701' STARTARROW='None' ENDINCLINATION='500;0;'/>
+          </node>
+          <node TEXT='PhoneNumber' ID='Freemind_Link_210925817' CREATED='1203540656' MODIFIED='1203540656'/>
+          <node TEXT='Duration' ID='Freemind_Link_646920029' CREATED='1203540656' MODIFIED='1203540656'/>
+          <node TEXT='Answered' ID='Freemind_Link_1229766560' CREATED='1203540656' MODIFIED='1203540656'/>
+          <node TEXT='Voicemail' ID='Freemind_Link_1374598773' CREATED='1203540656' MODIFIED='1203540656'/>
+          <richcontent TYPE='NOTE'>
+            <html>
+              <head/>
+              <body>
+                <p>
+                  <TABLE BORDER='1'>
+                    <TR>
+                      <TH>Field</TH>
+                      <TH>Type</TH>
+                      <TH>Null</TH>
+                      <TH>Key</TH>
+                      <TH>Default</TH>
+                      <TH>Extra</TH>
+                    </TR>
+                    <TR>
+                      <TD>PK_IncomingLog</TD>
+                      <TD>int(11)</TD>
+                      <TD>NO</TD>
+                      <TD>PRI</TD>
+                      <TD>NULL</TD>
+                      <TD>auto_increment</TD>
+                    </TR>
+                    <TR>
+                      <TD>DateTime</TD>
+                      <TD>datetime</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>FK_PhoneNumber</TD>
+                      <TD>int(11)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>PhoneNumber</TD>
+                      <TD>varchar(30)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>Duration</TD>
+                      <TD>int(11)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>Answered</TD>
+                      <TD>tinyint(1)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>0</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>Voicemail</TD>
+                      <TD>tinyint(1)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>0</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_id</TD>
+                      <TD>int(11)</TD>
+                      <TD>YES</TD>
+                      <TD>UNI</TD>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_batch</TD>
+                      <TD>int(11)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_user</TD>
+                      <TD>int(11)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_frozen</TD>
+                      <TD>tinyint(1)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>0</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_mod</TD>
+                      <TD>timestamp</TD>
+                      <TD>NO</TD>
+                      <TD/>
+                      <TD>CURRENT_TIMESTAMP</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_restrict</TD>
+                      <TD>int(11)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                  </TABLE>
+                </p>
+              </body>
+            </html>
+          </richcontent>
+        </node>
+        <node TEXT='Line_HouseMode' ID='Freemind_Link_1439828429' CREATED='1203540656' POSITION='right' MODIFIED='1203540656'>
+          <node TEXT='PK_Line_HouseMode' ID='Freemind_Link_1349855506' CREATED='1203540656' MODIFIED='1203540656'>
+            <icon BUILTIN='full-1'/>
+            <icon BUILTIN='password'/>
+          </node>
+          <node TEXT='ID' ID='Freemind_Link_1066321058' CREATED='1203540656' MODIFIED='1203540656'/>
+          <node TEXT='Type' ID='Freemind_Link_1858456735' CREATED='1203540656' MODIFIED='1203540656'/>
+          <node TEXT='EK_HouseMode' ID='Freemind_Link_1373306900' CREATED='1203540656' MODIFIED='1203540656'>
+            <font NAME='SansSerif' SIZE='12' BOLD='true'/>
+          </node>
+          <node TEXT='Routing' ID='Freemind_Link_1720707240' CREATED='1203540656' MODIFIED='1203540656'/>
+          <richcontent TYPE='NOTE'>
+            <html>
+              <head/>
+              <body>
+                <p>
+                  <TABLE BORDER='1'>
+                    <TR>
+                      <TH>Field</TH>
+                      <TH>Type</TH>
+                      <TH>Null</TH>
+                      <TH>Key</TH>
+                      <TH>Default</TH>
+                      <TH>Extra</TH>
+                    </TR>
+                    <TR>
+                      <TD>PK_Line_HouseMode</TD>
+                      <TD>int(11)</TD>
+                      <TD>NO</TD>
+                      <TD>PRI</TD>
+                      <TD>NULL</TD>
+                      <TD>auto_increment</TD>
+                    </TR>
+                    <TR>
+                      <TD>ID</TD>
+                      <TD>int(11)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>Type</TD>
+                      <TD>varchar(50)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>EK_HouseMode</TD>
+                      <TD>int(11)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>Routing</TD>
+                      <TD>text</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_id</TD>
+                      <TD>int(11)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_batch</TD>
+                      <TD>int(11)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_user</TD>
+                      <TD>int(11)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_frozen</TD>
+                      <TD>tinyint(1)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>0</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_mod</TD>
+                      <TD>timestamp</TD>
+                      <TD>NO</TD>
+                      <TD/>
+                      <TD>CURRENT_TIMESTAMP</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_restrict</TD>
+                      <TD>int(11)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                  </TABLE>
+                </p>
+              </body>
+            </html>
+          </richcontent>
+        </node>
+        <node TEXT='OutgoingLog' ID='Freemind_Link_1672746088' CREATED='1203540656' POSITION='right' MODIFIED='1203540656'>
+          <node TEXT='PK_OutgoingLog' ID='Freemind_Link_263093845' CREATED='1203540656' MODIFIED='1203540656'>
+            <icon BUILTIN='full-1'/>
+            <icon BUILTIN='password'/>
+          </node>
+          <node TEXT='EK_Users' ID='Freemind_Link_1896971656' CREATED='1203540656' MODIFIED='1203540656'>
+            <font NAME='SansSerif' SIZE='12' BOLD='true'/>
+          </node>
+          <node TEXT='FK_PhoneNumber' ID='Freemind_Link_685956924' CREATED='1203540656' MODIFIED='1203540656'>
+            <arrowlink ENDARROW='Default' DESTINATION='Freemind_Link_1414230207' COLOR='#4376a8' STARTINCLINATION='500;0;' ID='Freemind_Arrow_Link_1797207950' STARTARROW='None' ENDINCLINATION='500;0;'/>
+          </node>
+          <node TEXT='PhoneNumber' ID='Freemind_Link_275489870' CREATED='1203540656' MODIFIED='1203540656'/>
+          <node TEXT='Duration' ID='Freemind_Link_1482069653' CREATED='1203540656' MODIFIED='1203540656'/>
+          <node TEXT='Answered' ID='Freemind_Link_1778456180' CREATED='1203540656' MODIFIED='1203540656'/>
+          <richcontent TYPE='NOTE'>
+            <html>
+              <head/>
+              <body>
+                <p>
+                  <TABLE BORDER='1'>
+                    <TR>
+                      <TH>Field</TH>
+                      <TH>Type</TH>
+                      <TH>Null</TH>
+                      <TH>Key</TH>
+                      <TH>Default</TH>
+                      <TH>Extra</TH>
+                    </TR>
+                    <TR>
+                      <TD>PK_OutgoingLog</TD>
+                      <TD>int(11)</TD>
+                      <TD>NO</TD>
+                      <TD>PRI</TD>
+                      <TD>NULL</TD>
+                      <TD>auto_increment</TD>
+                    </TR>
+                    <TR>
+                      <TD>EK_Users</TD>
+                      <TD>int(11)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>FK_PhoneNumber</TD>
+                      <TD>int(11)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>PhoneNumber</TD>
+                      <TD>varchar(30)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>Duration</TD>
+                      <TD>int(11)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>Answered</TD>
+                      <TD>tinyint(1)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>0</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_id</TD>
+                      <TD>int(11)</TD>
+                      <TD>YES</TD>
+                      <TD>UNI</TD>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_batch</TD>
+                      <TD>int(11)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_user</TD>
+                      <TD>int(11)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_frozen</TD>
+                      <TD>tinyint(1)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>0</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_mod</TD>
+                      <TD>timestamp</TD>
+                      <TD>NO</TD>
+                      <TD/>
+                      <TD>CURRENT_TIMESTAMP</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_restrict</TD>
+                      <TD>int(11)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                  </TABLE>
+                </p>
+              </body>
+            </html>
+          </richcontent>
+        </node>
+        <node TEXT='PhoneNumber' ID='Freemind_Link_1877549849' CREATED='1203540656' POSITION='right' MODIFIED='1203540656'>
+          <node TEXT='PK_PhoneNumber' ID='Freemind_Link_1414230207' CREATED='1203540656' MODIFIED='1203540656'>
+            <icon BUILTIN='full-1'/>
+            <icon BUILTIN='password'/>
+          </node>
+          <node TEXT='FK_Contact' ID='Freemind_Link_266814021' CREATED='1203540656' MODIFIED='1203540656'>
+            <arrowlink ENDARROW='Default' DESTINATION='Freemind_Link_1162368255' COLOR='#787874' STARTINCLINATION='500;0;' ID='Freemind_Arrow_Link_74559424' STARTARROW='None' ENDINCLINATION='500;0;'/>
+          </node>
+          <node TEXT='FK_PhoneType' ID='Freemind_Link_1510911377' CREATED='1203540656' MODIFIED='1203540656'>
+            <arrowlink ENDARROW='Default' DESTINATION='Freemind_Link_1250412719' COLOR='#31cb64' STARTINCLINATION='500;0;' ID='Freemind_Arrow_Link_87140922' STARTARROW='None' ENDINCLINATION='500;0;'/>
+          </node>
+          <node TEXT='CountryCode' ID='Freemind_Link_438602488' CREATED='1203540656' MODIFIED='1203540656'/>
+          <node TEXT='AreaCode' ID='Freemind_Link_1973823142' CREATED='1203540656' MODIFIED='1203540656'/>
+          <node TEXT='PhoneNumber' ID='Freemind_Link_986424093' CREATED='1203540656' MODIFIED='1203540656'/>
+          <node TEXT='Extension' ID='Freemind_Link_1082316763' CREATED='1203540656' MODIFIED='1203540656'/>
+          <node TEXT='DialAs' ID='Freemind_Link_480461181' CREATED='1203540656' MODIFIED='1203540656'/>
+          <richcontent TYPE='NOTE'>
+            <html>
+              <head/>
+              <body>
+                <p>
+                  <TABLE BORDER='1'>
+                    <TR>
+                      <TH>Field</TH>
+                      <TH>Type</TH>
+                      <TH>Null</TH>
+                      <TH>Key</TH>
+                      <TH>Default</TH>
+                      <TH>Extra</TH>
+                    </TR>
+                    <TR>
+                      <TD>PK_PhoneNumber</TD>
+                      <TD>int(11)</TD>
+                      <TD>NO</TD>
+                      <TD>PRI</TD>
+                      <TD>NULL</TD>
+                      <TD>auto_increment</TD>
+                    </TR>
+                    <TR>
+                      <TD>FK_Contact</TD>
+                      <TD>int(11)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>FK_PhoneType</TD>
+                      <TD>int(11)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>CountryCode</TD>
+                      <TD>varchar(5)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>AreaCode</TD>
+                      <TD>varchar(6)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>PhoneNumber</TD>
+                      <TD>varchar(15)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>Extension</TD>
+                      <TD>varchar(10)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>DialAs</TD>
+                      <TD>varchar(20)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_id</TD>
+                      <TD>int(11)</TD>
+                      <TD>YES</TD>
+                      <TD>UNI</TD>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_batch</TD>
+                      <TD>int(11)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_user</TD>
+                      <TD>int(11)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_frozen</TD>
+                      <TD>tinyint(1)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>0</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_mod</TD>
+                      <TD>timestamp</TD>
+                      <TD>NO</TD>
+                      <TD/>
+                      <TD>CURRENT_TIMESTAMP</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_restrict</TD>
+                      <TD>int(11)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                  </TABLE>
+                </p>
+              </body>
+            </html>
+          </richcontent>
+        </node>
+        <node TEXT='PhoneNumber_Users_Sync' ID='Freemind_Link_1055110925' CREATED='1203540656' POSITION='right' MODIFIED='1203540656'>
+          <node TEXT='FK_PhoneNumber' ID='Freemind_Link_1158963617' CREATED='1203540656' MODIFIED='1203540656'>
+            <icon BUILTIN='full-1'/>
+            <icon BUILTIN='password'/>
+            <arrowlink ENDARROW='Default' DESTINATION='Freemind_Link_1414230207' COLOR='#4376a8' STARTINCLINATION='500;0;' ID='Freemind_Arrow_Link_1433750180' STARTARROW='None' ENDINCLINATION='500;0;'/>
+          </node>
+          <node TEXT='EK_Users' ID='Freemind_Link_1643130519' CREATED='1203540656' MODIFIED='1203540656'>
+            <font NAME='SansSerif' SIZE='12' BOLD='true'/>
+            <icon BUILTIN='full-1'/>
+            <icon BUILTIN='password'/>
+          </node>
+          <node TEXT='SyncID' ID='Freemind_Link_1264373970' CREATED='1203540656' MODIFIED='1203540656'/>
+          <node TEXT='LastModPluto' ID='Freemind_Link_1088926829' CREATED='1203540656' MODIFIED='1203540656'/>
+          <node TEXT='LastModSync' ID='Freemind_Link_1522341987' CREATED='1203540656' MODIFIED='1203540656'/>
+          <richcontent TYPE='NOTE'>
+            <html>
+              <head/>
+              <body>
+                <p>
+                  <TABLE BORDER='1'>
+                    <TR>
+                      <TH>Field</TH>
+                      <TH>Type</TH>
+                      <TH>Null</TH>
+                      <TH>Key</TH>
+                      <TH>Default</TH>
+                      <TH>Extra</TH>
+                    </TR>
+                    <TR>
+                      <TD>FK_PhoneNumber</TD>
+                      <TD>int(11)</TD>
+                      <TD>NO</TD>
+                      <TD>PRI</TD>
+                      <TD>0</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>EK_Users</TD>
+                      <TD>int(11)</TD>
+                      <TD>NO</TD>
+                      <TD>PRI</TD>
+                      <TD>0</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>SyncID</TD>
+                      <TD>varchar(30)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>LastModPluto</TD>
+                      <TD>datetime</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>LastModSync</TD>
+                      <TD>datetime</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_id</TD>
+                      <TD>int(11)</TD>
+                      <TD>YES</TD>
+                      <TD>UNI</TD>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_batch</TD>
+                      <TD>int(11)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_user</TD>
+                      <TD>int(11)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_frozen</TD>
+                      <TD>tinyint(1)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>0</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_mod</TD>
+                      <TD>timestamp</TD>
+                      <TD>NO</TD>
+                      <TD/>
+                      <TD>CURRENT_TIMESTAMP</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_restrict</TD>
+                      <TD>int(11)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                  </TABLE>
+                </p>
+              </body>
+            </html>
+          </richcontent>
+        </node>
+        <node TEXT='PhoneType' ID='Freemind_Link_1229322656' CREATED='1203540656' POSITION='right' MODIFIED='1203540656'>
+          <node TEXT='PK_PhoneType' ID='Freemind_Link_1250412719' CREATED='1203540656' MODIFIED='1203540656'>
+            <icon BUILTIN='full-1'/>
+            <icon BUILTIN='password'/>
+          </node>
+          <node TEXT='Description' ID='Freemind_Link_705273066' CREATED='1203540656' MODIFIED='1203540656'/>
+          <node TEXT='Define' ID='Freemind_Link_78435279' CREATED='1203540656' MODIFIED='1203540656'/>
+          <richcontent TYPE='NOTE'>
+            <html>
+              <head/>
+              <body>
+                <p>
+                  <TABLE BORDER='1'>
+                    <TR>
+                      <TH>Field</TH>
+                      <TH>Type</TH>
+                      <TH>Null</TH>
+                      <TH>Key</TH>
+                      <TH>Default</TH>
+                      <TH>Extra</TH>
+                    </TR>
+                    <TR>
+                      <TD>PK_PhoneType</TD>
+                      <TD>int(11)</TD>
+                      <TD>NO</TD>
+                      <TD>PRI</TD>
+                      <TD>NULL</TD>
+                      <TD>auto_increment</TD>
+                    </TR>
+                    <TR>
+                      <TD>Description</TD>
+                      <TD>varchar(20)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>Define</TD>
+                      <TD>varchar(20)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_id</TD>
+                      <TD>int(11)</TD>
+                      <TD>YES</TD>
+                      <TD>UNI</TD>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_batch</TD>
+                      <TD>int(11)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_user</TD>
+                      <TD>int(11)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_frozen</TD>
+                      <TD>tinyint(1)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>0</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_mod</TD>
+                      <TD>timestamp</TD>
+                      <TD>NO</TD>
+                      <TD/>
+                      <TD>CURRENT_TIMESTAMP</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_restrict</TD>
+                      <TD>int(11)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                  </TABLE>
+                </p>
+              </body>
+            </html>
+          </richcontent>
+        </node>
+        <node TEXT='PriorityCallers' ID='Freemind_Link_1559118590' CREATED='1203540656' POSITION='right' MODIFIED='1203540656'>
+          <node TEXT='PK_PriorityCallers' ID='Freemind_Link_174021670' CREATED='1203540656' MODIFIED='1203540656'>
+            <icon BUILTIN='full-1'/>
+            <icon BUILTIN='password'/>
+          </node>
+          <node TEXT='EK_Users' ID='Freemind_Link_1710644308' CREATED='1203540656' MODIFIED='1203540656'>
+            <font NAME='SansSerif' SIZE='12' BOLD='true'/>
+          </node>
+          <node TEXT='PhoneNumber' ID='Freemind_Link_1336691901' CREATED='1203540656' MODIFIED='1203540656'/>
+          <richcontent TYPE='NOTE'>
+            <html>
+              <head/>
+              <body>
+                <p>
+                  <TABLE BORDER='1'>
+                    <TR>
+                      <TH>Field</TH>
+                      <TH>Type</TH>
+                      <TH>Null</TH>
+                      <TH>Key</TH>
+                      <TH>Default</TH>
+                      <TH>Extra</TH>
+                    </TR>
+                    <TR>
+                      <TD>PK_PriorityCallers</TD>
+                      <TD>int(11)</TD>
+                      <TD>NO</TD>
+                      <TD>PRI</TD>
+                      <TD>NULL</TD>
+                      <TD>auto_increment</TD>
+                    </TR>
+                    <TR>
+                      <TD>EK_Users</TD>
+                      <TD>int(11)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>PhoneNumber</TD>
+                      <TD>varchar(100)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_id</TD>
+                      <TD>int(11)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_batch</TD>
+                      <TD>int(11)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_user</TD>
+                      <TD>int(11)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_frozen</TD>
+                      <TD>tinyint(1)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>0</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_mod</TD>
+                      <TD>timestamp</TD>
+                      <TD>NO</TD>
+                      <TD/>
+                      <TD>CURRENT_TIMESTAMP</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_restrict</TD>
+                      <TD>int(11)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                  </TABLE>
+                </p>
+              </body>
+            </html>
+          </richcontent>
+        </node>
+        <node TEXT='SpeedDial' ID='Freemind_Link_1189262016' CREATED='1203540657' POSITION='right' MODIFIED='1203540657'>
+          <node TEXT='PK_SpeedDial' ID='Freemind_Link_1346522922' CREATED='1203540656' MODIFIED='1203540656'>
+            <icon BUILTIN='full-1'/>
+            <icon BUILTIN='password'/>
+          </node>
+          <node TEXT='EK_Users' ID='Freemind_Link_1799946992' CREATED='1203540656' MODIFIED='1203540656'>
+            <font NAME='SansSerif' SIZE='12' BOLD='true'/>
+          </node>
+          <node TEXT='SortOrder' ID='Freemind_Link_1604850879' CREATED='1203540656' MODIFIED='1203540656'/>
+          <node TEXT='FK_PhoneNumber' ID='Freemind_Link_236885075' CREATED='1203540656' MODIFIED='1203540656'>
+            <arrowlink ENDARROW='Default' DESTINATION='Freemind_Link_1414230207' COLOR='#4376a8' STARTINCLINATION='500;0;' ID='Freemind_Arrow_Link_1538022391' STARTARROW='None' ENDINCLINATION='500;0;'/>
+          </node>
+          <node TEXT='PhoneNumber' ID='Freemind_Link_696471939' CREATED='1203540656' MODIFIED='1203540656'/>
+          <richcontent TYPE='NOTE'>
+            <html>
+              <head/>
+              <body>
+                <p>
+                  <TABLE BORDER='1'>
+                    <TR>
+                      <TH>Field</TH>
+                      <TH>Type</TH>
+                      <TH>Null</TH>
+                      <TH>Key</TH>
+                      <TH>Default</TH>
+                      <TH>Extra</TH>
+                    </TR>
+                    <TR>
+                      <TD>PK_SpeedDial</TD>
+                      <TD>int(11) unsigned</TD>
+                      <TD>NO</TD>
+                      <TD>PRI</TD>
+                      <TD>0</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>EK_Users</TD>
+                      <TD>int(11)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>SortOrder</TD>
+                      <TD>int(11)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>FK_PhoneNumber</TD>
+                      <TD>int(11)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>PhoneNumber</TD>
+                      <TD>varchar(30)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_id</TD>
+                      <TD>int(11)</TD>
+                      <TD>YES</TD>
+                      <TD>UNI</TD>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_batch</TD>
+                      <TD>int(11)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_user</TD>
+                      <TD>int(11)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_frozen</TD>
+                      <TD>tinyint(1)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>0</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_mod</TD>
+                      <TD>timestamp</TD>
+                      <TD>NO</TD>
+                      <TD/>
+                      <TD>CURRENT_TIMESTAMP</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_restrict</TD>
+                      <TD>int(11)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                  </TABLE>
+                </p>
+              </body>
+            </html>
+          </richcontent>
+        </node>
+        <node TEXT='UserRouting' ID='Freemind_Link_622013650' CREATED='1203540657' POSITION='right' MODIFIED='1203540657'>
+          <node TEXT='PK_UserRouting' ID='Freemind_Link_501860376' CREATED='1203540657' MODIFIED='1203540657'>
+            <icon BUILTIN='full-1'/>
+            <icon BUILTIN='password'/>
+          </node>
+          <node TEXT='EK_Users' ID='Freemind_Link_369314781' CREATED='1203540657' MODIFIED='1203540657'>
+            <font NAME='SansSerif' SIZE='12' BOLD='true'/>
+          </node>
+          <node TEXT='EK_UserMode' ID='Freemind_Link_1827090380' CREATED='1203540657' MODIFIED='1203540657'>
+            <font NAME='SansSerif' SIZE='12' BOLD='true'/>
+          </node>
+          <node TEXT='SendStatusFirst' ID='Freemind_Link_412881608' CREATED='1203540657' MODIFIED='1203540657'/>
+          <node TEXT='IsPriorityCaller' ID='Freemind_Link_1399694186' CREATED='1203540657' MODIFIED='1203540657'/>
+          <node TEXT='StepOrder' ID='Freemind_Link_1825149977' CREATED='1203540657' MODIFIED='1203540657'/>
+          <node TEXT='Routing' ID='Freemind_Link_1704717051' CREATED='1203540657' MODIFIED='1203540657'/>
+          <richcontent TYPE='NOTE'>
+            <html>
+              <head/>
+              <body>
+                <p>
+                  <TABLE BORDER='1'>
+                    <TR>
+                      <TH>Field</TH>
+                      <TH>Type</TH>
+                      <TH>Null</TH>
+                      <TH>Key</TH>
+                      <TH>Default</TH>
+                      <TH>Extra</TH>
+                    </TR>
+                    <TR>
+                      <TD>PK_UserRouting</TD>
+                      <TD>int(11)</TD>
+                      <TD>NO</TD>
+                      <TD>PRI</TD>
+                      <TD>NULL</TD>
+                      <TD>auto_increment</TD>
+                    </TR>
+                    <TR>
+                      <TD>EK_Users</TD>
+                      <TD>int(11)</TD>
+                      <TD>NO</TD>
+                      <TD/>
+                      <TD>0</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>EK_UserMode</TD>
+                      <TD>int(11)</TD>
+                      <TD>NO</TD>
+                      <TD/>
+                      <TD>0</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>SendStatusFirst</TD>
+                      <TD>tinyint(2)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>IsPriorityCaller</TD>
+                      <TD>tinyint(2)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>StepOrder</TD>
+                      <TD>int(11)</TD>
+                      <TD>NO</TD>
+                      <TD/>
+                      <TD>0</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>Routing</TD>
+                      <TD>text</TD>
+                      <TD>NO</TD>
+                      <TD/>
+                      <TD/>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_id</TD>
+                      <TD>int(11)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_batch</TD>
+                      <TD>int(11)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_user</TD>
+                      <TD>int(11)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_frozen</TD>
+                      <TD>tinyint(1)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>0</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_mod</TD>
+                      <TD>timestamp</TD>
+                      <TD>NO</TD>
+                      <TD/>
+                      <TD>CURRENT_TIMESTAMP</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_restrict</TD>
+                      <TD>int(11)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                  </TABLE>
+                </p>
+              </body>
+            </html>
+          </richcontent>
+        </node>
+        <node TEXT='Users' ID='Freemind_Link_356281406' CREATED='1203540657' POSITION='right' MODIFIED='1203540657'>
+          <node TEXT='EK_Users' ID='Freemind_Link_338551258' CREATED='1203540657' MODIFIED='1203540657'>
+            <font NAME='SansSerif' SIZE='12' BOLD='true'/>
+            <icon BUILTIN='full-1'/>
+            <icon BUILTIN='password'/>
+          </node>
+          <node TEXT='SyncSettings' ID='Freemind_Link_1882068926' CREATED='1203540657' MODIFIED='1203540657'/>
+          <richcontent TYPE='NOTE'>
+            <html>
+              <head/>
+              <body>
+                <p>
+                  <TABLE BORDER='1'>
+                    <TR>
+                      <TH>Field</TH>
+                      <TH>Type</TH>
+                      <TH>Null</TH>
+                      <TH>Key</TH>
+                      <TH>Default</TH>
+                      <TH>Extra</TH>
+                    </TR>
+                    <TR>
+                      <TD>EK_Users</TD>
+                      <TD>int(11)</TD>
+                      <TD>NO</TD>
+                      <TD>PRI</TD>
+                      <TD>0</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>SyncSettings</TD>
+                      <TD>text</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_id</TD>
+                      <TD>int(11)</TD>
+                      <TD>YES</TD>
+                      <TD>UNI</TD>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_batch</TD>
+                      <TD>int(11)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_user</TD>
+                      <TD>int(11)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_frozen</TD>
+                      <TD>tinyint(1)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>0</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_mod</TD>
+                      <TD>timestamp</TD>
+                      <TD>NO</TD>
+                      <TD/>
+                      <TD>CURRENT_TIMESTAMP</TD>
+                      <TD/>
+                    </TR>
+                    <TR>
+                      <TD>psc_restrict</TD>
+                      <TD>int(11)</TD>
+                      <TD>YES</TD>
+                      <TD/>
+                      <TD>NULL</TD>
+                      <TD/>
+                    </TR>
+                  </TABLE>
+                </p>
+              </body>
+            </html>
+          </richcontent>
+        </node>
+      </node>
+    </map>

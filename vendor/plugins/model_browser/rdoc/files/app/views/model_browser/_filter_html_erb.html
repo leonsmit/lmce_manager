@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>File: _filter.html.erb</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+  <div id="fileHeader">
+    <h1>_filter.html.erb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>app/views/model_browser/_filter.html.erb
+      </td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Wed Jul 16 11:33:08 +0200 2008</td>
+    </tr>
+    </table>
+  </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+&lt;%
+</p>
+<h1>begin</h1>
+<p>
+This view partial generates a form for a model-object&#8216;s attributes,
+which may be used for filtering a list.
+</p>
+<p>
+This view simply consists of a form with an input field for each
+filter-attribute and a &quot;Filter&quot;-button, which submits the form.
+</p>
+<h2>Parameters</h2>
+<p>
+The following parameters <b>must</b> be provided to generate the view:
+</p>
+<table>
+<tr><td valign="top">filter_attributes:</td><td>An array containing the names of the filter-attributes or a single name of
+one single filter-attribute to display.
+
+</td></tr>
+</table>
+<h2>Styling</h2>
+<p>
+To support css-styling of the generated html, the following css-classes are
+used:
+</p>
+<table>
+<tr><td valign="top">genericFilter:</td><td>A div of this css-class spans the whole generated view-block. With this
+enclosing class, you can individually style the tags used inside this
+block:
+
+<table>
+<tr><td valign="top">label:</td><td>the input-fields&#8217; labels
+
+</td></tr>
+<tr><td valign="top">input:</td><td>the individual input-fields
+
+</td></tr>
+</table>
+</td></tr>
+</table>
+<h1>end</h1>
+<p>
+%&gt;
+</p>
+<p>
+&lt;%
+</p>
+<pre>
+  filter_attributes ||= []
+  filter_attributes = [filter_attributes] unless filter_attributes.respond_to? :each
+</pre>
+<p>
+%&gt; &lt;div class=&quot;genericFilter&quot;&gt;
+</p>
+<pre>
+  &lt;% if !filter_attributes.empty? %&gt;
+    &lt;% form_tag({:action =&gt; 'index'}, :method =&gt; 'get') do %&gt;
+      &lt;% filter_attributes.each do |filter_attribute| %&gt;
+        &lt;label&gt;&lt;%= filter_attribute.to_s.upcase %&gt;&lt;/label&gt;
+        &lt;%= text_field_tag filter_attribute, h(params[filter_attribute]) %&gt;
+      &lt;% end %&gt;
+      &lt;%= submit_tag 'Filter' %&gt;
+    &lt;% end %&gt;
+  &lt;% end %&gt;
+</pre>
+<p>
+&lt;/div&gt;
+</p>
+
+    </div>
+
+
+   </div>
+
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>
